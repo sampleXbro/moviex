@@ -1,18 +1,23 @@
-import {configureStore, applyMiddleware, getDefaultMiddleware, combineReducers} from '@reduxjs/toolkit'
+import {
+  configureStore,
+  applyMiddleware,
+  getDefaultMiddleware,
+  combineReducers,
+} from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
-import {rootSaga} from './sagas/rootSaga'
+import { rootSaga } from './sagas/rootSaga'
 import userReducer from './slices/userSlice'
 
 const sagaMiddleware = createSagaMiddleware()
 
 const reducer = combineReducers({
-  userReducer
+  userReducer,
 })
 
 const store = configureStore({
   reducer,
   middleware: [...getDefaultMiddleware({ thunk: false }), sagaMiddleware],
-  })
+})
 
 sagaMiddleware.run(rootSaga)
 
