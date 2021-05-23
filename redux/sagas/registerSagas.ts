@@ -4,7 +4,9 @@ import { setUser } from '../slices/userSlice'
 
 export function* getUserSaga(action: any) {
   try {
-    const { data } = yield axios.get('https://jsonplaceholder.typicode.com/users/1')
+    const { data } = yield axios.get(
+      'https://jsonplaceholder.typicode.com/users/1'
+    )
 
     yield put(setUser({ ...data }))
   } catch (e) {
