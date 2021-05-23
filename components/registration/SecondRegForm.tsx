@@ -1,20 +1,14 @@
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
-import {
-  TextField,
-  Button,
-  FormHelperText,
-  Typography,
-  Input,
-  Box,
-} from '@material-ui/core'
+import { Button, Box } from '@material-ui/core'
 import * as Yup from 'yup'
 import {
   ConfirmButtonText,
   NextRegFormsProps,
   SecondRegFormData,
 } from '../../types/types'
+import { FormikTextField } from '../FormikTextField'
 
 const RegSchema = Yup.object({
   age: Yup.number()
@@ -28,7 +22,6 @@ const RegSchema = Yup.object({
 })
 
 export default function SecondRegForm({
-  setIsLoading,
   maxSteps,
 }: NextRegFormsProps): React.ReactNode {
   const router = useRouter()
@@ -88,31 +81,20 @@ export default function SecondRegForm({
       }}
     >
       <Box style={{ overflow: 'auto' }}>
-        <Typography>Type your age:*</Typography>
-        <Input
+        <FormikTextField
           fullWidth
-          margin={'dense'}
-          id={'age'}
+          formik={formik}
           name={'age'}
           type={'number'}
-          value={formik.values.age}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.age && Boolean(formik.errors.age)}
+          label={'Type your age'}
         />
-        <FormHelperText error>{formik.errors.age}</FormHelperText>
-        <TextField
+
+        <FormikTextField
           fullWidth
-          margin={'normal'}
-          variant={'outlined'}
-          id={'favFilm'}
+          formik={formik}
           name={'favFilm'}
-          label={'What is your favorite film?*'}
-          value={formik.values.favFilm}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.favFilm && Boolean(formik.errors.favFilm)}
-          helperText={formik.touched.favFilm && formik.errors.favFilm}
+          type={'text'}
+          label={'What is your favorite film?'}
         />
       </Box>
 

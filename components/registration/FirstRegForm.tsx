@@ -13,6 +13,8 @@ import {
 import * as Yup from 'yup'
 import axios from 'axios'
 import { FirstRegFormData } from '../../types/types'
+import { FormikTextField } from '../FormikTextField'
+import { FormikCheckbox } from '../FormikCheckbox'
 
 const RegSchema = Yup.object({
   login: Yup.string()
@@ -40,7 +42,7 @@ const RegSchema = Yup.object({
   ),
 })
 
-export type RegFormProps = {
+type RegFormProps = {
   setIsLoading: (val: boolean) => void
   setIsUploader: (val: boolean) => void
 }
@@ -102,100 +104,54 @@ export default function FirstRegForm({
       }}
     >
       <Box style={{ overflow: 'auto' }}>
-        <TextField
+        <FormikTextField
           fullWidth
-          margin={'normal'}
-          variant={'outlined'}
-          id={'login'}
+          formik={formik}
           name={'login'}
           label={'Login*'}
-          value={formik.values.login}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.login && Boolean(formik.errors.login)}
-          helperText={formik.touched.login && formik.errors.login}
+          type={'text'}
         />
-        <TextField
+
+        <FormikTextField
           fullWidth
-          margin={'normal'}
-          variant={'outlined'}
-          id={'nickname'}
+          formik={formik}
           name={'nickname'}
-          label={'Nickname*'}
-          value={formik.values.nickname}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.nickname && Boolean(formik.errors.nickname)}
-          helperText={formik.touched.nickname && formik.errors.nickname}
+          label={'NickName*'}
+          type={'text'}
         />
-        <TextField
+
+        <FormikTextField
           fullWidth
-          margin={'normal'}
-          variant={'outlined'}
-          id={'email'}
+          formik={formik}
           name={'email'}
           label={'Email*'}
           type={'email'}
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
         />
-        <TextField
+
+        <FormikTextField
           fullWidth
-          margin={'normal'}
-          variant={'outlined'}
-          id={'password'}
+          formik={formik}
           name={'password'}
-          type={'password'}
           label={'Password*'}
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
-        />
-        <TextField
-          fullWidth
-          margin={'normal'}
-          variant={'outlined'}
-          id={'passwordConfirmation'}
-          name={'passwordConfirmation'}
           type={'password'}
-          label={'Confirm password*'}
-          value={formik.values.passwordConfirmation}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.touched.passwordConfirmation &&
-            Boolean(formik.errors.passwordConfirmation)
-          }
-          helperText={
-            formik.touched.passwordConfirmation &&
-            formik.errors.passwordConfirmation
-          }
         />
+
+        <FormikTextField
+          fullWidth
+          formik={formik}
+          name={'passwordConfirmation'}
+          label={'Confirm password*'}
+          type={'password'}
+        />
+
         <Container>
           <FormHelperText>
-            <Checkbox
-              id={'isUploader'}
-              name={'isUploader'}
-              checked={formik.values.isUploader}
-              onChange={formik.handleChange}
-              inputProps={{ 'aria-label': 'primary checkbox' }}
-            />
-            I want to upload films
+            <FormikCheckbox formik={formik} name={'isUploader'} />I want to
+            upload films
           </FormHelperText>
 
           <FormHelperText>
-            <Checkbox
-              id={'isAcceptRules'}
-              name={'isAcceptRules'}
-              checked={formik.values.isAcceptRules}
-              onChange={formik.handleChange}
-              inputProps={{ 'aria-label': 'secondary checkbox' }}
-            />
+            <FormikCheckbox formik={formik} name={'isAcceptRules'} />
             I've read{' '}
             <Link
               target={'_blank'}

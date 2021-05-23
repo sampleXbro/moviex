@@ -4,6 +4,7 @@ import { useFormik } from 'formik'
 import { TextField, Button, Box } from '@material-ui/core'
 import * as Yup from 'yup'
 import { ConfirmButtonText, ThirdRegFormData } from '../../types/types'
+import { FormikTextField } from '../FormikTextField'
 
 const phoneRegExp: RegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -90,99 +91,60 @@ export default function ThirdRegForm({ setIsLoading, maxSteps }) {
       }}
     >
       <Box style={{ overflow: 'auto' }}>
-        <TextField
+        <FormikTextField
           fullWidth
-          margin={'normal'}
-          variant={'outlined'}
-          id={'bilName'}
+          formik={formik}
+          type={'text'}
           name={'bilName'}
           label={'Billing name*'}
-          value={formik.values.bilName}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.bilName && Boolean(formik.errors.bilName)}
-          helperText={formik.touched.bilName && formik.errors.bilName}
         />
-        <TextField
+
+        <FormikTextField
           fullWidth
-          margin={'normal'}
-          variant={'outlined'}
+          formik={formik}
           type={'number'}
-          id={'taxNumber'}
           name={'taxNumber'}
           label={'TAX number*'}
-          value={formik.values.taxNumber}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.taxNumber && Boolean(formik.errors.taxNumber)}
-          helperText={formik.touched.taxNumber && formik.errors.taxNumber}
         />
-        <TextField
+
+        <FormikTextField
           fullWidth
-          margin={'normal'}
-          variant={'outlined'}
-          id={'bilEmail'}
+          formik={formik}
+          type={'email'}
           name={'bilEmail'}
           label={'Billing email*'}
-          type={'email'}
-          value={formik.values.bilEmail}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.bilEmail && Boolean(formik.errors.bilEmail)}
-          helperText={formik.touched.bilEmail && formik.errors.bilEmail}
         />
-        <TextField
+
+        <FormikTextField
           fullWidth
-          margin={'normal'}
-          variant={'outlined'}
-          id={'bilPhone'}
+          formik={formik}
+          type={'number'}
           name={'bilPhone'}
           label={'Billing phone*'}
-          value={formik.values.bilPhone}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.bilPhone && Boolean(formik.errors.bilPhone)}
-          helperText={formik.touched.bilPhone && formik.errors.bilPhone}
         />
-        <TextField
+
+        <FormikTextField
           fullWidth
-          margin={'normal'}
-          variant={'outlined'}
-          id={'zip'}
-          name={'zip'}
+          formik={formik}
           type={'number'}
+          name={'zip'}
           label={'ZIP code*'}
-          value={formik.values.zip}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.zip && Boolean(formik.errors.zip)}
-          helperText={formik.touched.zip && formik.errors.zip}
         />
-        <TextField
+
+        <FormikTextField
           fullWidth
-          margin={'normal'}
-          variant={'outlined'}
-          id={'country'}
+          formik={formik}
+          type={'text'}
           name={'country'}
           label={'Your country*'}
-          value={formik.values.country}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.country && Boolean(formik.errors.country)}
-          helperText={formik.touched.country && formik.errors.country}
         />
-        <TextField
+
+        <FormikTextField
           fullWidth
-          margin={'normal'}
-          variant={'outlined'}
-          id={'city'}
+          formik={formik}
+          type={'text'}
           name={'city'}
           label={'Your city*'}
-          value={formik.values.city}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.city && Boolean(formik.errors.city)}
-          helperText={formik.touched.city && formik.errors.city}
         />
       </Box>
       <Box display={'flex'} justifyContent={'space-between'}>
