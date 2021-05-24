@@ -1,6 +1,5 @@
 import {
   configureStore,
-  applyMiddleware,
   getDefaultMiddleware,
   combineReducers,
 } from '@reduxjs/toolkit'

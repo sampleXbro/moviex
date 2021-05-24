@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
-import { TextField, Button, Box } from '@material-ui/core'
+import { Button, Box } from '@material-ui/core'
 import * as Yup from 'yup'
 import {
   ConfirmButtonText,
@@ -12,7 +12,7 @@ import { FormikTextField } from '../FormikTextField'
 import { regData } from './regData'
 import { BaseSchema } from 'yup'
 
-const phoneRegExp: RegExp =
+const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 const RegSchema: BaseSchema = Yup.object({
@@ -37,12 +37,11 @@ const RegSchema: BaseSchema = Yup.object({
 })
 
 export default function ThirdRegForm({
-  setIsLoading,
   maxSteps,
 }: NextRegFormsProps): React.ReactElement {
   const router = useRouter()
 
-  const step: number = Number(router.query.step)
+  const step = Number(router.query.step)
 
   if (window.history.state.options._h) {
     router.push('/register/1')
@@ -63,7 +62,7 @@ export default function ThirdRegForm({
       city: sessionData?.city || '',
     },
     validationSchema: RegSchema,
-    onSubmit: (values) => {
+    onSubmit: () => {
       if (step === maxSteps) {
         //send req to database
         console.log(

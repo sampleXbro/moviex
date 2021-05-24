@@ -17,7 +17,7 @@ const ThirdRegForm = dynamic(
 export default function RegisterPage(): React.ReactElement {
   const router = useRouter()
 
-  const step: number = Number(router.query.step)
+  const step = Number(router.query.step)
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isUploader, setIsUploader] = useState<boolean>(false)

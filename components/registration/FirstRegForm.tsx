@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import { FormikProps, useFormik } from 'formik'
+import { useFormik } from 'formik'
 import { Container, Button, FormHelperText, Link, Box } from '@material-ui/core'
 import * as Yup from 'yup'
 import axios from 'axios'
@@ -121,7 +121,7 @@ export default function FirstRegForm({
 
           <FormHelperText>
             <FormikCheckbox formik={formik} name={'isAcceptRules'} />
-            I've read{' '}
+            I&apos;ve read{' '}
             <Link
               target={'_blank'}
               href={

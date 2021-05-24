@@ -28,7 +28,7 @@ export default function SecondRegForm({
 }: NextRegFormsProps): React.ReactElement {
   const router = useRouter()
 
-  const step: number = Number(router.query.step)
+  const step = Number(router.query.step)
 
   if (window.history.state.options._h) {
     router.push('/register/1')
@@ -44,7 +44,7 @@ export default function SecondRegForm({
       favFilm: sessionData?.favFilm || '',
     },
     validationSchema: RegSchema,
-    onSubmit: (values) => {
+    onSubmit: () => {
       if (step === maxSteps) {
         //send req to database
         console.log(

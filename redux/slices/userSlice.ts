@@ -20,6 +20,7 @@ const userSlice = createSlice({
       const userData = action.payload
       return { ...state, ...userData }
     },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     getUser() {},
   },
 })
