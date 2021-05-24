@@ -48,6 +48,12 @@ export default function RegisterPage() {
 
   return (
     <>
+      <style jsx global>{`
+        body {
+          background-color: grey;
+        }
+      `}</style>
+
       <div
         style={{
           position: 'relative',

@@ -1,4 +1,16 @@
-export const regData = {
+type InputTypes = 'text' | 'number' | 'email' | 'password' | 'checkbox'
+
+type InputsProps = {
+  name: string
+  label: string
+  type: Partial<InputTypes>
+}
+
+type RegData = {
+  [key: number]: Array<InputsProps>
+}
+
+export const regData: RegData = {
   1: [
     {
       name: 'login',
