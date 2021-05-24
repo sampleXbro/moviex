@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import { TextField, Button, Box } from '@material-ui/core'
 import * as Yup from 'yup'
 import { ConfirmButtonText, ThirdRegFormData } from '../../types/types'
 import { FormikTextField } from '../FormikTextField'
+import { regData } from './regData'
 
 const phoneRegExp: RegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -57,7 +58,10 @@ export default function ThirdRegForm({ setIsLoading, maxSteps }) {
     onSubmit: (values) => {
       if (step === maxSteps) {
         //send req to database
-        console.log('Data has been sent')
+        console.log(
+          'Data has been sent',
+          JSON.parse(sessionStorage.getItem('moviex/reg'))
+        )
       }
     },
   })
@@ -71,6 +75,17 @@ export default function ThirdRegForm({ setIsLoading, maxSteps }) {
       })
     )
   })
+
+  const renderInputs = regData[step].map((d, i) => (
+    <FormikTextField
+      key={i}
+      fullWidth
+      formik={formik}
+      name={d.name}
+      label={d.label}
+      type={d.type}
+    />
+  ))
 
   const prevHandler = () => {
     router.replace('/register/2')
@@ -90,63 +105,8 @@ export default function ThirdRegForm({ setIsLoading, maxSteps }) {
         overflow: 'auto',
       }}
     >
-      <Box style={{ overflow: 'auto' }}>
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          type={'text'}
-          name={'bilName'}
-          label={'Billing name*'}
-        />
+      <Box style={{ overflow: 'auto' }}>{renderInputs}</Box>
 
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          type={'number'}
-          name={'taxNumber'}
-          label={'TAX number*'}
-        />
-
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          type={'email'}
-          name={'bilEmail'}
-          label={'Billing email*'}
-        />
-
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          type={'number'}
-          name={'bilPhone'}
-          label={'Billing phone*'}
-        />
-
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          type={'number'}
-          name={'zip'}
-          label={'ZIP code*'}
-        />
-
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          type={'text'}
-          name={'country'}
-          label={'Your country*'}
-        />
-
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          type={'text'}
-          name={'city'}
-          label={'Your city*'}
-        />
-      </Box>
       <Box display={'flex'} justifyContent={'space-between'}>
         <Button color='primary' variant='contained' onClick={prevHandler}>
           &#8678; PREV

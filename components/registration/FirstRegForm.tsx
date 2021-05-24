@@ -1,20 +1,13 @@
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
-import {
-  TextField,
-  Container,
-  Button,
-  FormHelperText,
-  Checkbox,
-  Link,
-  Box,
-} from '@material-ui/core'
+import { Container, Button, FormHelperText, Link, Box } from '@material-ui/core'
 import * as Yup from 'yup'
 import axios from 'axios'
 import { FirstRegFormData } from '../../types/types'
 import { FormikTextField } from '../FormikTextField'
 import { FormikCheckbox } from '../FormikCheckbox'
+import { regData } from './regData'
 
 const RegSchema = Yup.object({
   login: Yup.string()
@@ -50,8 +43,10 @@ type RegFormProps = {
 export default function FirstRegForm({
   setIsLoading,
   setIsUploader,
-}: RegFormProps): React.ReactNode {
+}: RegFormProps) {
   const router = useRouter()
+
+  const step = +router.query.step
 
   const sessionData: FirstRegFormData = JSON.parse(
     sessionStorage.getItem('moviex/reg')
@@ -93,6 +88,17 @@ export default function FirstRegForm({
     )
   })
 
+  const renderInputs = regData[step].map((d, i) => (
+    <FormikTextField
+      key={i}
+      fullWidth
+      formik={formik}
+      name={d.name}
+      label={d.label}
+      type={d.type}
+    />
+  ))
+
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -104,45 +110,7 @@ export default function FirstRegForm({
       }}
     >
       <Box style={{ overflow: 'auto' }}>
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          name={'login'}
-          label={'Login*'}
-          type={'text'}
-        />
-
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          name={'nickname'}
-          label={'NickName*'}
-          type={'text'}
-        />
-
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          name={'email'}
-          label={'Email*'}
-          type={'email'}
-        />
-
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          name={'password'}
-          label={'Password*'}
-          type={'password'}
-        />
-
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          name={'passwordConfirmation'}
-          label={'Confirm password*'}
-          type={'password'}
-        />
+        {renderInputs}
 
         <Container>
           <FormHelperText>

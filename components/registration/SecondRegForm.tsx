@@ -9,6 +9,7 @@ import {
   SecondRegFormData,
 } from '../../types/types'
 import { FormikTextField } from '../FormikTextField'
+import { regData } from './regData'
 
 const RegSchema = Yup.object({
   age: Yup.number()
@@ -21,9 +22,7 @@ const RegSchema = Yup.object({
     .required('Favorite film is required'),
 })
 
-export default function SecondRegForm({
-  maxSteps,
-}: NextRegFormsProps): React.ReactNode {
+export default function SecondRegForm({ maxSteps }: NextRegFormsProps) {
   const router = useRouter()
 
   const step: number = +router.query.step
@@ -45,7 +44,10 @@ export default function SecondRegForm({
     onSubmit: (values) => {
       if (step === maxSteps) {
         //send req to database
-        console.log('Data has been sent')
+        console.log(
+          'Data has been sent',
+          JSON.parse(sessionStorage.getItem('moviex/reg'))
+        )
       } else {
         router.replace('/register/3')
       }
@@ -61,6 +63,17 @@ export default function SecondRegForm({
       })
     )
   })
+
+  const renderInputs = regData[step].map((d, i) => (
+    <FormikTextField
+      key={i}
+      fullWidth
+      formik={formik}
+      name={d.name}
+      label={d.label}
+      type={d.type}
+    />
+  ))
 
   const prevHandler = () => {
     router.replace('/register/1')
@@ -80,23 +93,7 @@ export default function SecondRegForm({
         overflow: 'auto',
       }}
     >
-      <Box style={{ overflow: 'auto' }}>
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          name={'age'}
-          type={'number'}
-          label={'Type your age'}
-        />
-
-        <FormikTextField
-          fullWidth
-          formik={formik}
-          name={'favFilm'}
-          type={'text'}
-          label={'What is your favorite film?'}
-        />
-      </Box>
+      <Box style={{ overflow: 'auto' }}>{renderInputs}</Box>
 
       <Box display={'flex'} justifyContent={'space-between'}>
         <Button color='primary' variant='contained' onClick={prevHandler}>

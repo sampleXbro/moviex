@@ -1,8 +1,9 @@
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Stepper, Step, StepLabel, Typography, Paper } from '@material-ui/core'
 import { CustomCircularProgress } from '../../components/CustomCircularProgress'
+import { regData } from '../../components/registration/regData'
 const FirstRegForm = dynamic(
   () => import('../../components/registration/FirstRegForm')
 )
@@ -15,8 +16,17 @@ const ThirdRegForm = dynamic(
 
 export default function RegisterPage() {
   const router = useRouter()
+
+  const step = +router.query.step
+
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isUploader, setIsUploader] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (!Object.keys(regData).includes(String(step))) {
+      router.replace('/register/1')
+    }
+  })
 
   const maxSteps: number = isUploader ? 3 : 2
 
@@ -35,8 +45,6 @@ export default function RegisterPage() {
         return <ThirdRegForm setIsLoading={setIsLoading} maxSteps={maxSteps} />
     }
   }
-
-  const step: number = +router.query.step
 
   return (
     <>

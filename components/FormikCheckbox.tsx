@@ -1,4 +1,4 @@
-import { Checkbox, TextField } from '@material-ui/core'
+import { Checkbox, FormHelperText } from '@material-ui/core'
 import React from 'react'
 
 export const FormikCheckbox = ({ formik, name, ...props }) => (
