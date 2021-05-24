@@ -3,14 +3,19 @@ import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import { TextField, Button, Box } from '@material-ui/core'
 import * as Yup from 'yup'
-import { ConfirmButtonText, ThirdRegFormData } from '../../types/types'
+import {
+  ConfirmButtonText,
+  NextRegFormsProps,
+  ThirdRegFormData,
+} from '../../types/types'
 import { FormikTextField } from '../FormikTextField'
 import { regData } from './regData'
+import { BaseSchema } from 'yup'
 
 const phoneRegExp: RegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
-const RegSchema = Yup.object({
+const RegSchema: BaseSchema = Yup.object({
   bilName: Yup.string()
     .min(2, 'Name is too short!')
     .max(100, 'Name is too Long!')
@@ -31,17 +36,20 @@ const RegSchema = Yup.object({
   city: Yup.string().required('City is required'),
 })
 
-export default function ThirdRegForm({ setIsLoading, maxSteps }) {
+export default function ThirdRegForm({
+  setIsLoading,
+  maxSteps,
+}: NextRegFormsProps): React.ReactElement {
   const router = useRouter()
 
-  const step: number = +router.query.step
+  const step: number = Number(router.query.step)
 
   if (window.history.state.options._h) {
     router.push('/register/1')
   }
 
   const sessionData: ThirdRegFormData = JSON.parse(
-    sessionStorage.getItem('moviex/reg')
+    sessionStorage.getItem('moviex/reg') ?? ''
   )
 
   const formik = useFormik({
@@ -60,7 +68,7 @@ export default function ThirdRegForm({ setIsLoading, maxSteps }) {
         //send req to database
         console.log(
           'Data has been sent',
-          JSON.parse(sessionStorage.getItem('moviex/reg'))
+          JSON.parse(sessionStorage.getItem('moviex/reg') ?? '')
         )
       }
     },
@@ -70,7 +78,7 @@ export default function ThirdRegForm({ setIsLoading, maxSteps }) {
     sessionStorage.setItem(
       'moviex/reg',
       JSON.stringify({
-        ...JSON.parse(sessionStorage.getItem('moviex/reg')),
+        ...JSON.parse(sessionStorage.getItem('moviex/reg') ?? ''),
         ...formik.values,
       })
     )

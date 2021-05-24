@@ -1,6 +1,21 @@
-import { TextField } from '@material-ui/core'
+import { TextField, TextFieldProps } from '@material-ui/core'
+import { FormikProps } from 'formik'
+import React from 'react'
 
-export const FormikTextField = ({ formik, type, name, label, ...props }) => (
+type FormikTextFieldProps = {
+  formik: FormikProps<any>
+  type: string
+  name: string
+  label: string
+} & TextFieldProps
+
+export const FormikTextField: React.FC<FormikTextFieldProps> = ({
+  formik,
+  type,
+  name,
+  label,
+  ...props
+}) => (
   <TextField
     margin={'normal'}
     variant={'outlined'}

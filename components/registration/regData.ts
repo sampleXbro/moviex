@@ -3,7 +3,7 @@ type InputTypes = 'text' | 'number' | 'email' | 'password' | 'checkbox'
 type InputsProps = {
   name: string
   label: string
-  type: Partial<InputTypes>
+  type: InputTypes
 }
 
 type RegData = {

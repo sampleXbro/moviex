@@ -10,8 +10,9 @@ import {
 } from '../../types/types'
 import { FormikTextField } from '../FormikTextField'
 import { regData } from './regData'
+import { BaseSchema } from 'yup'
 
-const RegSchema = Yup.object({
+const RegSchema: BaseSchema = Yup.object({
   age: Yup.number()
     .min(16, 'You are too young!')
     .max(150, 'Are sure?!')
@@ -22,17 +23,19 @@ const RegSchema = Yup.object({
     .required('Favorite film is required'),
 })
 
-export default function SecondRegForm({ maxSteps }: NextRegFormsProps) {
+export default function SecondRegForm({
+  maxSteps,
+}: NextRegFormsProps): React.ReactElement {
   const router = useRouter()
 
-  const step: number = +router.query.step
+  const step: number = Number(router.query.step)
 
   if (window.history.state.options._h) {
     router.push('/register/1')
   }
 
   const sessionData: SecondRegFormData = JSON.parse(
-    sessionStorage.getItem('moviex/reg')
+    sessionStorage.getItem('moviex/reg') ?? ''
   )
 
   const formik = useFormik({
@@ -46,7 +49,7 @@ export default function SecondRegForm({ maxSteps }: NextRegFormsProps) {
         //send req to database
         console.log(
           'Data has been sent',
-          JSON.parse(sessionStorage.getItem('moviex/reg'))
+          JSON.parse(sessionStorage.getItem('moviex/reg') ?? '')
         )
       } else {
         router.replace('/register/3')
@@ -58,7 +61,7 @@ export default function SecondRegForm({ maxSteps }: NextRegFormsProps) {
     sessionStorage.setItem(
       'moviex/reg',
       JSON.stringify({
-        ...JSON.parse(sessionStorage.getItem('moviex/reg')),
+        ...JSON.parse(sessionStorage.getItem('moviex/reg') ?? ''),
         ...formik.values,
       })
     )

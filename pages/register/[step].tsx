@@ -14,10 +14,10 @@ const ThirdRegForm = dynamic(
   () => import('../../components/registration/ThirdRegForm')
 )
 
-export default function RegisterPage() {
+export default function RegisterPage(): React.ReactElement {
   const router = useRouter()
 
-  const step = +router.query.step
+  const step: number = Number(router.query.step)
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isUploader, setIsUploader] = useState<boolean>(false)

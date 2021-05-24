@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import { useFormik } from 'formik'
+import { FormikProps, useFormik } from 'formik'
 import { Container, Button, FormHelperText, Link, Box } from '@material-ui/core'
 import * as Yup from 'yup'
 import axios from 'axios'
@@ -8,8 +8,14 @@ import { FirstRegFormData } from '../../types/types'
 import { FormikTextField } from '../FormikTextField'
 import { FormikCheckbox } from '../FormikCheckbox'
 import { regData } from './regData'
+import { BaseSchema } from 'yup'
 
-const RegSchema = Yup.object({
+type RegFormProps = {
+  setIsLoading: (val: boolean) => void
+  setIsUploader: (val: boolean) => void
+}
+
+const RegSchema: BaseSchema = Yup.object({
   login: Yup.string()
     .min(2, 'Name is too short!')
     .max(50, 'Name is too Long!')
@@ -35,21 +41,16 @@ const RegSchema = Yup.object({
   ),
 })
 
-type RegFormProps = {
-  setIsLoading: (val: boolean) => void
-  setIsUploader: (val: boolean) => void
-}
-
 export default function FirstRegForm({
   setIsLoading,
   setIsUploader,
-}: RegFormProps) {
+}: RegFormProps): React.ReactElement {
   const router = useRouter()
 
-  const step = +router.query.step
+  const step = Number(router.query.step)
 
   const sessionData: FirstRegFormData = JSON.parse(
-    sessionStorage.getItem('moviex/reg')
+    sessionStorage.getItem('moviex/reg') ?? ''
   )
 
   const formik = useFormik({
@@ -82,13 +83,13 @@ export default function FirstRegForm({
     sessionStorage.setItem(
       'moviex/reg',
       JSON.stringify({
-        ...JSON.parse(sessionStorage.getItem('moviex/reg')),
+        ...JSON.parse(sessionStorage.getItem('moviex/reg') ?? ''),
         ...formik.values,
       })
     )
   })
 
-  const renderInputs = regData[step].map((d, i) => (
+  const renderInputs: React.ReactNode = regData[step].map((d, i) => (
     <FormikTextField
       key={i}
       fullWidth

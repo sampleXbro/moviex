@@ -1,7 +1,17 @@
-import { Checkbox, FormHelperText } from '@material-ui/core'
+import { Checkbox, CheckboxProps } from '@material-ui/core'
 import React from 'react'
+import { FormikProps } from 'formik'
 
-export const FormikCheckbox = ({ formik, name, ...props }) => (
+type FormikCheckBoxProps = {
+  formik: FormikProps<any>
+  name: string
+} & CheckboxProps
+
+export const FormikCheckbox: React.FC<FormikCheckBoxProps> = ({
+  formik,
+  name,
+  ...props
+}) => (
   <Checkbox
     id={name}
     name={name}
