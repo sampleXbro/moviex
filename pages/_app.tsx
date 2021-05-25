@@ -3,6 +3,8 @@ import { Provider } from 'react-redux'
 import store from '../redux/configStore'
 import { NextPage } from 'next'
 import React, { PropsWithChildren } from 'react'
+import dynamic from 'next/dynamic'
+const MainLayout = dynamic(() => import('../components/common/MainLayout'))
 
 type AppProps = {
   Component: NextPage
@@ -12,7 +14,9 @@ type AppProps = {
 function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
     </Provider>
   )
 }
