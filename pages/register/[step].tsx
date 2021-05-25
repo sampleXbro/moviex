@@ -2,16 +2,20 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { Stepper, Step, StepLabel, Typography, Paper } from '@material-ui/core'
-import { CustomCircularProgress } from '../../components/CustomCircularProgress'
+import { CustomCircularProgress } from '../../components/common/CustomCircularProgress'
 import { regData } from '../../components/registration/regData'
+import Head from 'next/head'
 const FirstRegForm = dynamic(
-  () => import('../../components/registration/FirstRegForm')
+  () => import('../../components/registration/FirstRegForm'),
+  { ssr: false }
 )
 const SecondRegForm = dynamic(
-  () => import('../../components/registration/SecondRegForm')
+  () => import('../../components/registration/SecondRegForm'),
+  { ssr: false }
 )
 const ThirdRegForm = dynamic(
-  () => import('../../components/registration/ThirdRegForm')
+  () => import('../../components/registration/ThirdRegForm'),
+  { ssr: false }
 )
 
 export default function RegisterPage(): React.ReactElement {
@@ -20,6 +24,7 @@ export default function RegisterPage(): React.ReactElement {
   const step = Number(router.query.step)
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const [isUploader, setIsUploader] = useState<boolean>(false)
 
   useEffect(() => {
@@ -48,12 +53,9 @@ export default function RegisterPage(): React.ReactElement {
 
   return (
     <>
-      <style jsx global>{`
-        body {
-          background-color: grey;
-        }
-      `}</style>
-
+      <Head>
+        <title>Registration</title>
+      </Head>
       <div
         style={{
           position: 'relative',
