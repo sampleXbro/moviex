@@ -1,3 +1,4 @@
-import { useAppSelector } from '../hooks'
+import { useSelector } from 'react-redux'
 
-export const useUser = () => useAppSelector((state) => state.userReducer)
+export const useMovies = () =>
+  useSelector((state: any) => state.playingMoviesReducer)
