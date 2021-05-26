@@ -1,6 +1,5 @@
 import '../styles/globals.sass'
-import { Provider } from 'react-redux'
-import store from '../redux/configStore'
+import { wrapper } from '../redux/store'
 import { NextPage } from 'next'
 import React, { PropsWithChildren } from 'react'
 import dynamic from 'next/dynamic'
@@ -15,14 +14,14 @@ type AppProps = {
 
 function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
   return (
-    <Provider store={store}>
+    <MuiThemeProvider theme={theme}>
       <MuiThemeProvider theme={theme}>
         <MainLayout>
           <Component {...pageProps} />
         </MainLayout>
       </MuiThemeProvider>
-    </Provider>
+    </MuiThemeProvider>
   )
 }
 
-export default MyApp
+export default wrapper.withRedux(MyApp)
