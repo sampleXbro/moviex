@@ -8,7 +8,7 @@ import {
   NextRegFormsProps,
   ThirdRegFormData,
 } from '../../types/types'
-import { FormikTextField } from '../FormikTextField'
+import { FormikTextField } from '../common/FormikTextField'
 import { regData } from './regData'
 import { BaseSchema } from 'yup'
 
@@ -44,11 +44,11 @@ export default function ThirdRegForm({
   const step = Number(router.query.step)
 
   if (window.history.state.options._h) {
-    router.push('/register/1')
+    router.replace('/register/1')
   }
 
   const sessionData: ThirdRegFormData = JSON.parse(
-    sessionStorage.getItem('moviex/reg') ?? ''
+    sessionStorage.getItem('moviex/reg') ?? '{}'
   )
 
   const formik = useFormik({
@@ -67,7 +67,7 @@ export default function ThirdRegForm({
         //send req to database
         console.log(
           'Data has been sent',
-          JSON.parse(sessionStorage.getItem('moviex/reg') ?? '')
+          JSON.parse(sessionStorage.getItem('moviex/reg') ?? '{}')
         )
       }
     },
@@ -77,7 +77,7 @@ export default function ThirdRegForm({
     sessionStorage.setItem(
       'moviex/reg',
       JSON.stringify({
-        ...JSON.parse(sessionStorage.getItem('moviex/reg') ?? ''),
+        ...JSON.parse(sessionStorage.getItem('moviex/reg') ?? '{}'),
         ...formik.values,
       })
     )
