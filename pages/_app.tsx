@@ -15,11 +15,9 @@ type AppProps = {
 function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
   return (
     <MuiThemeProvider theme={theme}>
-      <MuiThemeProvider theme={theme}>
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
-      </MuiThemeProvider>
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
     </MuiThemeProvider>
   )
 }
