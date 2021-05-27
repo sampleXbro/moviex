@@ -3,6 +3,7 @@ import Image from 'next/image'
 import NextLink from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { getGenresApi } from '../api/api'
+import { CustomCircularProgress } from '../common/CustomCircularProgress'
 
 type MoviesListProps = {
   movies: Array<any>
@@ -21,6 +22,8 @@ export const MoviesList = ({ movies }: MoviesListProps) => {
       .map((genre: any) => genre.name)
       .join(', ')
   }
+
+  if (!movies) return <CustomCircularProgress />
 
   return (
     <>

@@ -8,10 +8,9 @@ import React from 'react'
 import { Pagination } from '@material-ui/lab'
 import { MoviesList } from '../components/movies/MoviesList'
 import { useMovies } from '../redux/selectors/selectors'
-import { CustomCircularProgress } from '../components/common/CustomCircularProgress'
 
 export default function NowPlaying() {
-  const { data, isLoading } = useMovies()
+  const { data } = useMovies()
   const dispatch = useDispatch()
 
   const handlePaginationChange = (
@@ -20,16 +19,12 @@ export default function NowPlaying() {
   ) => {
     dispatch(getPlayingMovies(value))
   }
-
-  if (isLoading || !Object.keys(data.nowPlaying).length) {
-    return <CustomCircularProgress />
-  }
-
   return (
     <>
       <Head>
         <title>Moviex | Now playing</title>
       </Head>
+
       <Typography variant={'h4'} align={'center'}>
         NOW PLAYING
       </Typography>
@@ -46,10 +41,8 @@ export default function NowPlaying() {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({ store }) => {
-    const { data } = await getNowPlayingMoviesApi(1)
+export const getStaticProps = wrapper.getStaticProps(async ({ store }) => {
+  const { data } = await getNowPlayingMoviesApi(1)
 
-    store.dispatch(setPlayingMovies(data))
-  }
-)
+  store.dispatch(setPlayingMovies(data))
+})

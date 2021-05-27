@@ -7,11 +7,10 @@ import { getPopularMovies, setPopularMovies } from '../redux/slices/movieSlice'
 import { useDispatch } from 'react-redux'
 import { MoviesList } from '../components/movies/MoviesList'
 import { Pagination } from '@material-ui/lab'
-import { CustomCircularProgress } from '../components/common/CustomCircularProgress'
 import { useMovies } from '../redux/selectors/selectors'
 
 export default function Popular() {
-  const { data, isLoading } = useMovies()
+  const { data } = useMovies()
   const dispatch = useDispatch()
 
   const handlePaginationChange = (
@@ -20,9 +19,7 @@ export default function Popular() {
   ) => {
     dispatch(getPopularMovies(value))
   }
-  if (isLoading || !Object.keys(data.popular).length) {
-    return <CustomCircularProgress />
-  }
+
   return (
     <>
       <Head>
