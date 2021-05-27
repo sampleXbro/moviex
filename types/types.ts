@@ -58,7 +58,7 @@ export type MoviesListProps = {
   movies: Array<Movie>
 }
 
-type MoviesListResponse = typeof moviesInitData
+export type MoviesListResponse = typeof moviesInitData
 
 export type MoviesState = {
   data: MoviesListResponse
