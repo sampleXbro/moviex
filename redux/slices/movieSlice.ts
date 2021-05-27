@@ -1,17 +1,21 @@
 import { createAction, createSlice } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
+import { MoviesState } from '../../types/types'
 
-type Movies = {
-  data: any
-  isLoading: boolean
+const hydrate = createAction<MoviesState>(HYDRATE)
+
+export const moviesInitData = {
+  dates: { maximum: '', minimum: '' },
+  page: 1,
+  results: [],
+  total_pages: 1,
+  total_results: 1,
 }
 
-const hydrate = createAction<Movies>(HYDRATE)
-
-const initialState: Movies = {
+const initialState: MoviesState = {
   data: {
-    nowPlaying: {},
-    popular: {},
+    nowPlaying: moviesInitData,
+    popular: moviesInitData,
   },
   isLoading: false,
 }
@@ -41,8 +45,6 @@ const movieSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
-      console.log('HYDRATE', state, action.payload)
-
       return {
         ...state,
         ...(action.payload as any)[movieSlice.name],

@@ -4,22 +4,19 @@ import NextLink from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { getGenresApi } from '../api/api'
 import { CustomCircularProgress } from '../common/CustomCircularProgress'
+import { Genre, Movie, MoviesListProps } from '../../types/types'
 
-type MoviesListProps = {
-  movies: Array<any>
-}
-
-export const MoviesList = ({ movies }: MoviesListProps) => {
-  const [genres, setGenres] = useState([])
+export const MoviesList = ({ movies }: MoviesListProps): React.ReactElement => {
+  const [genres, setGenres] = useState<Array<Genre>>([])
 
   useEffect(() => {
-    getGenresApi().then((res: any) => setGenres(res.data.genres))
+    getGenresApi().then((res) => setGenres(res.data.genres))
   }, [])
 
-  const getGenresByIds = (ids: Array<number>) => {
+  const getGenresByIds = (ids: Array<number>): string => {
     return genres
-      .filter((genre: any) => ids.includes(genre.id))
-      .map((genre: any) => genre.name)
+      .filter((genre: Genre) => ids.includes(genre.id))
+      .map((genre: Genre) => genre.name)
       .join(', ')
   }
 
@@ -27,7 +24,7 @@ export const MoviesList = ({ movies }: MoviesListProps) => {
 
   return (
     <>
-      {movies.map((mov: any) => (
+      {movies.map((mov: Movie) => (
         <Paper key={mov.id} style={{ margin: '10px auto', maxWidth: '1200px' }}>
           <Box display={'flex'} minHeight={'250px'} padding={'10px'}>
             <Image

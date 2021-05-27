@@ -9,14 +9,14 @@ import { MoviesList } from '../components/movies/MoviesList'
 import { Pagination } from '@material-ui/lab'
 import { useMovies } from '../redux/selectors/selectors'
 
-export default function Popular() {
+export default function Popular(): React.ReactElement {
   const { data } = useMovies()
   const dispatch = useDispatch()
 
   const handlePaginationChange = (
     e: React.ChangeEvent<unknown>,
     value: number
-  ) => {
+  ): void => {
     dispatch(getPopularMovies(value))
   }
 

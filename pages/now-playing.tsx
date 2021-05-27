@@ -9,14 +9,14 @@ import { Pagination } from '@material-ui/lab'
 import { MoviesList } from '../components/movies/MoviesList'
 import { useMovies } from '../redux/selectors/selectors'
 
-export default function NowPlaying() {
+export default function NowPlaying(): React.ReactElement {
   const { data } = useMovies()
   const dispatch = useDispatch()
 
   const handlePaginationChange = (
     e: React.ChangeEvent<unknown>,
     value: number
-  ) => {
+  ): void => {
     dispatch(getPlayingMovies(value))
   }
   return (
