@@ -7,3 +7,8 @@ export const getNowPlayingMoviesApi = (page = 1) => {
     `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=${page}`
   )
 }
+export const getGenresApi = () => {
+  return axios.get(
+    `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`
+  )
+}
