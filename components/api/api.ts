@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosPromise } from 'axios'
 
 const apiKey = process.env.NEXT_PUBLIC_API_KEY
 
@@ -7,18 +7,22 @@ const Axios = axios.create({
   responseType: 'json',
 })
 
-export const getNowPlayingMoviesApi = (page = 1) => {
+export const getNowPlayingMoviesApi = (page = 1): AxiosPromise => {
   return Axios.get(
     `/movie/now_playing?api_key=${apiKey}&language=en-US&page=${page}`
   )
 }
 
-export const getPopularMoviesApi = (page = 1) => {
+export const getPopularMoviesApi = (page = 1): AxiosPromise => {
   return Axios.get(
     `/movie/popular?api_key=${apiKey}&language=en-US&page=${page}`
   )
 }
 
-export const getGenresApi = () => {
+export const getGenresApi = (): AxiosPromise => {
   return Axios.get(`/genre/movie/list?api_key=${apiKey}&language=en-US`)
+}
+
+export const getMovieApi = (id: number): AxiosPromise => {
+  return Axios.get(`movie/${id}?api_key=${apiKey}&language=en-US`)
 }

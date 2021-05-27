@@ -41,7 +41,7 @@ export const MoviesList = ({ movies }: MoviesListProps): React.ReactElement => {
               width={'100%'}
             >
               <Link style={{ cursor: 'pointer' }}>
-                <NextLink href={'/'}>
+                <NextLink href={`/movies/${mov.id}`}>
                   <Typography variant={'h5'}>
                     {mov.title} / {mov.original_title}
                   </Typography>
