@@ -6,11 +6,13 @@ import {
 } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
 import { rootSaga } from './sagas/rootSaga'
-import playingMoviesReducer from './slices/movieSlice'
+import playingMovies from './slices/playingMoviesSlice'
+import popularMovies from './slices/popularMoviesSlice'
 import { createWrapper } from 'next-redux-wrapper'
 
 const reducer = combineReducers({
-  playingMoviesReducer,
+  playingMovies,
+  popularMovies,
 })
 
 export const makeStore = (): Store => {

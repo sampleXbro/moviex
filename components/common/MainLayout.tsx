@@ -32,11 +32,6 @@ import { useRouter } from 'next/router'
 
 const drawerWidth = 240
 
-const links = [
-  { title: 'Now playing', path: '/now-playing' },
-  { title: 'Popular', path: '/popular' },
-]
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -175,6 +170,11 @@ export default function MainLayout({
 
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null)
+
+  const links = [
+    { title: 'Now playing', path: '/now-playing' },
+    { title: 'Popular', path: '/popular' },
+  ]
 
   const handleDrawerOpen = (): void => {
     setOpen(true)

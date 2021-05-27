@@ -1,36 +1,26 @@
 import { createAction, createSlice } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
+import { MoviesState } from '../../types/types'
+import { initialMoviesState } from './initData'
 
-type PlayingMovies = {
-  data: any
-  isLoading: boolean
-}
-
-const hydrate = createAction<PlayingMovies>(HYDRATE)
-
-const initialState: PlayingMovies = {
-  data: {},
-  isLoading: false,
-}
+const hydrate = createAction<MoviesState>(HYDRATE)
 
 const playingMovieSlice = createSlice({
-  name: 'playingMoviesReducer',
-  initialState,
+  name: 'popularMovies',
+  initialState: initialMoviesState,
   reducers: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    getPlayingMovies(state, action) {
+    getPopularMovies(state, action) {
       state.isLoading = true
     },
 
-    setPlayingMovies(state, action) {
+    setPopularMovies(state, action) {
       state.data = action.payload
       state.isLoading = false
     },
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
-      console.log('HYDRATE', state, action.payload)
-
       return {
         ...state,
         ...(action.payload as any)[playingMovieSlice.name],
@@ -39,6 +29,6 @@ const playingMovieSlice = createSlice({
   },
 })
 
-export const { getPlayingMovies, setPlayingMovies } = playingMovieSlice.actions
+export const { getPopularMovies, setPopularMovies } = playingMovieSlice.actions
 
 export default playingMovieSlice.reducer
