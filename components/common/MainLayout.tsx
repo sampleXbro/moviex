@@ -1,4 +1,4 @@
-import { Fireplace, PlayArrow } from '@material-ui/icons'
+import { PlayCircleOutline, Whatshot } from '@material-ui/icons'
 import clsx from 'clsx'
 import {
   createStyles,
@@ -168,13 +168,14 @@ export default function MainLayout({
 }: MainLayout): React.ReactElement {
   const classes = useStyles()
   const theme = useTheme()
-  const [open, setOpen] = React.useState(false)
+  const router = useRouter()
 
+  const [open, setOpen] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null)
 
-  const router = useRouter()
   const handleDrawerOpen = (): void => {
     setOpen(true)
   }
@@ -198,6 +199,10 @@ export default function MainLayout({
   const handleMenuClose = (): void => {
     setAnchorEl(null)
     handleMobileMenuClose()
+  }
+
+  const handleMenuClick = (): void => {
+    router.push('/register/1').then(handleMenuClose)
   }
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
@@ -225,8 +230,7 @@ export default function MainLayout({
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClick}>Register</MenuItem>
     </Menu>
   )
 
@@ -354,7 +358,7 @@ export default function MainLayout({
               onClick={() => router.push(path)}
             >
               <ListItemIcon>
-                {title === 'Popular' ? <Fireplace /> : <PlayArrow />}
+                {title === 'Popular' ? <Whatshot /> : <PlayCircleOutline />}
               </ListItemIcon>
               <ListItemText primary={title} />
             </ListItem>

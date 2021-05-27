@@ -3,6 +3,9 @@ import { red } from '@material-ui/core/colors'
 import { colors } from './colors'
 
 const theme = createMuiTheme({
+  shape: {
+    borderRadius: 10,
+  },
   palette: {
     primary: {
       main: colors['primary-color'],

@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { Typography } from '@material-ui/core'
 
 export default function Popular() {
   return (
@@ -6,7 +7,9 @@ export default function Popular() {
       <Head>
         <title>Moviex | Popular</title>
       </Head>
-      <div>POPULAR</div>
+      <Typography variant={'h4'} align={'center'}>
+        POPULAR
+      </Typography>
     </>
   )
 }
