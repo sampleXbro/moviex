@@ -3,14 +3,17 @@ import { Box, Typography } from '@material-ui/core'
 import React from 'react'
 import { wrapper } from '../redux/store'
 import { getPopularMoviesApi } from '../components/api/api'
-import { getPopularMovies, setPopularMovies } from '../redux/slices/movieSlice'
+import {
+  getPopularMovies,
+  setPopularMovies,
+} from '../redux/slices/popularMoviesSlice'
 import { useDispatch } from 'react-redux'
 import { MoviesList } from '../components/movies/MoviesList'
 import { Pagination } from '@material-ui/lab'
-import { useMovies } from '../redux/selectors/selectors'
+import { usePopularMovies } from '../redux/selectors/selectors'
 
 export default function Popular(): React.ReactElement {
-  const { data } = useMovies()
+  const { data } = usePopularMovies()
   const dispatch = useDispatch()
 
   const handlePaginationChange = (
@@ -28,11 +31,11 @@ export default function Popular(): React.ReactElement {
       <Typography variant={'h4'} align={'center'}>
         POPULAR
       </Typography>
-      <MoviesList movies={data.popular.results} />
+      <MoviesList movies={data.results} />
       <Box display={'flex'} justifyContent={'center'}>
         <Pagination
           onChange={handlePaginationChange}
-          count={data.popular.total_pages}
+          count={data.total_pages}
           variant='outlined'
           color='primary'
         />

@@ -1,4 +1,4 @@
-import { moviesInitData } from '../redux/slices/movieSlice'
+import { moviesInitData } from '../redux/slices/initData'
 
 export type NextRegFormsProps = {
   setIsLoading: (val: boolean) => void
@@ -61,13 +61,11 @@ export type MoviesListProps = {
 type MoviesListResponse = typeof moviesInitData
 
 export type MoviesState = {
-  data: {
-    nowPlaying: MoviesListResponse
-    popular: MoviesListResponse
-  }
+  data: MoviesListResponse
   isLoading: boolean
 }
 
 export type FullState = {
-  movies: MoviesState
+  playingMovies: MoviesState
+  popularMovies: MoviesState
 }

@@ -1,14 +1,16 @@
 import { put } from 'redux-saga/effects'
 import {
   getPlayingMovies,
-  getPopularMovies,
   setPlayingMovies,
-  setPopularMovies,
-} from '../slices/movieSlice'
+} from '../slices/playingMoviesSlice'
 import {
   getNowPlayingMoviesApi,
   getPopularMoviesApi,
 } from '../../components/api/api'
+import {
+  getPopularMovies,
+  setPopularMovies,
+} from '../slices/popularMoviesSlice'
 
 type Action = {
   type: string

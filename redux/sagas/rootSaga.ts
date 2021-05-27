@@ -1,6 +1,7 @@
 import { Effect, takeLatest } from 'redux-saga/effects'
 import { getPlayingMoviesSaga, getPopularMoviesSaga } from './moviesSagas'
-import { getPlayingMovies, getPopularMovies } from '../slices/movieSlice'
+import { getPlayingMovies } from '../slices/playingMoviesSlice'
+import { getPopularMovies } from '../slices/popularMoviesSlice'
 
 export function* rootSaga(): Generator<Effect> {
   yield takeLatest(getPlayingMovies.type, getPlayingMoviesSaga)
