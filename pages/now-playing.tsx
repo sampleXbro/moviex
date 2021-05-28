@@ -11,9 +11,11 @@ import React from 'react'
 import { Pagination } from '@material-ui/lab'
 import { MoviesList } from '../components/movies/MoviesList'
 import { usePlayingMovies } from '../redux/selectors/selectors'
+import { AxiosResponse } from 'axios'
 
 export default function NowPlaying(): React.ReactElement {
   const { data } = usePlayingMovies()
+
   const dispatch = useDispatch()
 
   const handlePaginationChange = (
@@ -45,7 +47,7 @@ export default function NowPlaying(): React.ReactElement {
 }
 
 export const getStaticProps = wrapper.getStaticProps(async ({ store }) => {
-  const { data } = await getNowPlayingMoviesApi(1)
+  const { data }: AxiosResponse = await getNowPlayingMoviesApi(1)
 
   store.dispatch(setPlayingMovies(data))
 })

@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux'
 import { MoviesList } from '../components/movies/MoviesList'
 import { Pagination } from '@material-ui/lab'
 import { usePopularMovies } from '../redux/selectors/selectors'
+import { AxiosResponse } from 'axios'
 
 export default function Popular(): React.ReactElement {
   const { data } = usePopularMovies()
@@ -45,7 +46,7 @@ export default function Popular(): React.ReactElement {
 }
 
 export const getStaticProps = wrapper.getStaticProps(async ({ store }) => {
-  const { data } = await getPopularMoviesApi(1)
+  const { data }: AxiosResponse = await getPopularMoviesApi(1)
 
   store.dispatch(setPopularMovies(data))
 })

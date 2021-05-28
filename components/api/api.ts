@@ -26,3 +26,9 @@ export const getGenresApi = (): AxiosPromise => {
 export const getMovieApi = (id: number): AxiosPromise => {
   return Axios.get(`movie/${id}?api_key=${apiKey}&language=en-US`)
 }
+
+export const getMovieVideosApi = (id: number): AxiosPromise => {
+  return Axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`
+  )
+}
