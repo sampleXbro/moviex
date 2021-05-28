@@ -5,32 +5,17 @@ import React, { useEffect, useState } from 'react'
 import { getGenresApi } from '../api/api'
 import { CustomCircularProgress } from '../common/CustomCircularProgress'
 import { Genre, Movie, MoviesListResponse } from '../../types/types'
-import { Pagination } from '@material-ui/lab'
-import { useRouter } from 'next/router'
 
 type MoviesListProps = {
   data: MoviesListResponse
-  page: number
 }
 
-export const MoviesList = ({
-  data,
-  page,
-}: MoviesListProps): React.ReactElement => {
+export const MoviesList = ({ data }: MoviesListProps): React.ReactElement => {
   const [genres, setGenres] = useState<Array<Genre>>([])
-
-  const router = useRouter()
 
   useEffect(() => {
     getGenresApi().then((res) => setGenres(res.data.genres))
   }, [])
-
-  const handlePaginationChange = (
-    e: React.ChangeEvent<unknown>,
-    value: number
-  ): void => {
-    router.push(`/popular?page=${value}`)
-  }
 
   const getGenresByIds = (ids: Array<number>): string => {
     return genres
@@ -107,15 +92,6 @@ export const MoviesList = ({
           </Box>
         </Paper>
       ))}
-      <Box display={'flex'} justifyContent={'center'}>
-        <Pagination
-          page={page}
-          onChange={handlePaginationChange}
-          count={data.total_pages}
-          variant='outlined'
-          color='primary'
-        />
-      </Box>
     </>
   )
 }

@@ -190,8 +190,8 @@ export default function MainLayout({
   }, [])
 
   const links = [
-    { title: 'Now playing', path: '/now-playing' },
-    { title: 'Popular', path: '/popular' },
+    { title: 'Now playing', path: '/movies/now-playing/1' },
+    { title: 'Popular', path: '/movies/popular/1' },
   ]
 
   const handleDrawerOpen = (): void => {
@@ -374,7 +374,10 @@ export default function MainLayout({
         <List>
           {links.map(({ title, path }, index) => (
             <ListItem
-              selected={path === router.asPath}
+              selected={
+                path.split('/').slice(0, -1).join('/') ===
+                router.asPath.split('/').slice(0, -1).join('/')
+              }
               button
               key={path + index}
               onClick={() => router.push(path)}
