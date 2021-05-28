@@ -32,3 +32,9 @@ export const getMovieVideosApi = (id: number): AxiosPromise => {
     `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`
   )
 }
+
+export const getSearchedMoviesApi = (str = '', page = 1): AxiosPromise => {
+  return Axios.get(
+    `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${str}&page=${page}&include_adult=false`
+  )
+}

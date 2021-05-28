@@ -15,7 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { fade } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -29,6 +29,9 @@ import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { useRouter } from 'next/router'
+import { getSearchedMoviesApi } from '../api/api'
+import { LiveSearch } from './LiveSearch'
+import { Movie } from '../../types/types'
 
 const drawerWidth = 240
 
@@ -144,7 +147,6 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       justifyContent: 'flex-end',
       padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
       ...theme.mixins.toolbar,
     },
     content: {
@@ -168,8 +170,24 @@ export default function MainLayout({
   const [open, setOpen] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
+  const [movies, setMovies] = React.useState<Array<Movie>>([])
+  const [isLiveSearchVisible, setIsLiveSearchVisible] =
+    React.useState<boolean>(false)
+
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null)
+
+  useEffect(() => {
+    const handleClickListener = (e: any): void => {
+      if (e.target.id === 'searchList' || e.target.id === 'searchInput') {
+        setIsLiveSearchVisible(true)
+      } else {
+        setIsLiveSearchVisible(false)
+      }
+    }
+    window.addEventListener('click', handleClickListener)
+    return () => window.removeEventListener('click', handleClickListener)
+  }, [])
 
   const links = [
     { title: 'Now playing', path: '/now-playing' },
@@ -213,8 +231,10 @@ export default function MainLayout({
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const { value } = event.target
-    if (value.length > 3) {
-      console.log(event.target.value)
+    if (value.length > 2) {
+      getSearchedMoviesApi(value).then((res) => setMovies(res.data.results))
+    } else {
+      setMovies([])
     }
   }
 
@@ -284,7 +304,8 @@ export default function MainLayout({
           <Typography variant='h6' noWrap>
             MOVIEX
           </Typography>
-          <div className={classes.search}>
+          <div className={classes.search} style={{ width: '450px' }}>
+            {isLiveSearchVisible && <LiveSearch movies={movies} />}
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -296,6 +317,7 @@ export default function MainLayout({
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              id={'searchInput'}
             />
           </div>
           <div className={classes.grow} />

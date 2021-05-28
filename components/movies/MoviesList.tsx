@@ -26,11 +26,16 @@ export const MoviesList = ({ movies }: MoviesListProps): React.ReactElement => {
     <>
       {movies.map((mov: Movie) => (
         <Paper key={mov.id} style={{ margin: '10px auto', maxWidth: '1200px' }}>
-          <Box display={'flex'} minHeight={'250px'} padding={'10px'}>
+          <Box
+            display={'flex'}
+            minHeight={'250px'}
+            padding={'10px'}
+            justifyContent={'center'}
+          >
             <Image
               src={'https://image.tmdb.org/t/p/w300' + mov.poster_path}
               width={250}
-              height={375}
+              height={350}
               layout={'intrinsic'}
             />
             <Box
