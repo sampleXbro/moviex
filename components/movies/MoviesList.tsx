@@ -4,14 +4,33 @@ import NextLink from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { getGenresApi } from '../api/api'
 import { CustomCircularProgress } from '../common/CustomCircularProgress'
-import { Genre, Movie, MoviesListProps } from '../../types/types'
+import { Genre, Movie, MoviesListResponse } from '../../types/types'
+import { Pagination } from '@material-ui/lab'
+import { useRouter } from 'next/router'
 
-export const MoviesList = ({ movies }: MoviesListProps): React.ReactElement => {
+type MoviesListProps = {
+  data: MoviesListResponse
+  page: number
+}
+
+export const MoviesList = ({
+  data,
+  page,
+}: MoviesListProps): React.ReactElement => {
   const [genres, setGenres] = useState<Array<Genre>>([])
+
+  const router = useRouter()
 
   useEffect(() => {
     getGenresApi().then((res) => setGenres(res.data.genres))
   }, [])
+
+  const handlePaginationChange = (
+    e: React.ChangeEvent<unknown>,
+    value: number
+  ): void => {
+    router.push(`/popular?page=${value}`)
+  }
 
   const getGenresByIds = (ids: Array<number>): string => {
     return genres
@@ -20,11 +39,11 @@ export const MoviesList = ({ movies }: MoviesListProps): React.ReactElement => {
       .join(', ')
   }
 
-  if (!movies) return <CustomCircularProgress />
+  if (!data.results.length) return <CustomCircularProgress />
 
   return (
     <>
-      {movies.map((mov: Movie) => (
+      {data.results.map((mov: Movie) => (
         <Paper key={mov.id} style={{ margin: '10px auto', maxWidth: '1200px' }}>
           <Box
             display={'flex'}
@@ -88,6 +107,15 @@ export const MoviesList = ({ movies }: MoviesListProps): React.ReactElement => {
           </Box>
         </Paper>
       ))}
+      <Box display={'flex'} justifyContent={'center'}>
+        <Pagination
+          page={page}
+          onChange={handlePaginationChange}
+          count={data.total_pages}
+          variant='outlined'
+          color='primary'
+        />
+      </Box>
     </>
   )
 }

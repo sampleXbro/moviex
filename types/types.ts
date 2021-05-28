@@ -54,10 +54,6 @@ export type Genre = {
   name: string
 }
 
-export type MoviesListProps = {
-  movies: Array<Movie>
-}
-
 export type MoviesListResponse = typeof moviesInitData
 
 export type MoviesState = {

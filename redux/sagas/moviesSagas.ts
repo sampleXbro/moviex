@@ -21,7 +21,7 @@ type Action = {
 
 export function* getPlayingMoviesSaga(action: Action) {
   yield getPlayingMovies(action.payload)
-  console.log('saga')
+
   try {
     const { data } = yield getNowPlayingMoviesApi(action.payload)
     yield put(setPlayingMovies(data))

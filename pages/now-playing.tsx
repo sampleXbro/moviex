@@ -6,24 +6,25 @@ import {
 } from '../redux/slices/playingMoviesSlice'
 import { useDispatch } from 'react-redux'
 import { getNowPlayingMoviesApi } from '../components/api/api'
-import { Box, Typography } from '@material-ui/core'
-import React from 'react'
-import { Pagination } from '@material-ui/lab'
+import { Typography } from '@material-ui/core'
+import React, { useEffect } from 'react'
 import { MoviesList } from '../components/movies/MoviesList'
 import { usePlayingMovies } from '../redux/selectors/selectors'
 import { AxiosResponse } from 'axios'
+import { useRouter } from 'next/router'
 
 export default function NowPlaying(): React.ReactElement {
+  const router = useRouter()
   const { data } = usePlayingMovies()
+
+  const page = Number(router.query.page) || 1
 
   const dispatch = useDispatch()
 
-  const handlePaginationChange = (
-    e: React.ChangeEvent<unknown>,
-    value: number
-  ): void => {
-    dispatch(getPlayingMovies(value))
-  }
+  useEffect(() => {
+    dispatch(getPlayingMovies(page))
+  }, [page])
+
   return (
     <>
       <Head>
@@ -33,21 +34,12 @@ export default function NowPlaying(): React.ReactElement {
       <Typography variant={'h4'} align={'center'}>
         NOW PLAYING
       </Typography>
-      <MoviesList movies={data.results} />
-      <Box display={'flex'} justifyContent={'center'}>
-        <Pagination
-          onChange={handlePaginationChange}
-          count={data.total_pages}
-          variant='outlined'
-          color='primary'
-        />
-      </Box>
+      <MoviesList data={data} page={page} />
     </>
   )
 }
 
 export const getStaticProps = wrapper.getStaticProps(async ({ store }) => {
   const { data }: AxiosResponse = await getNowPlayingMoviesApi(1)
-
   store.dispatch(setPlayingMovies(data))
 })

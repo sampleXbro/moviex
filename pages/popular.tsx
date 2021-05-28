@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import { Box, Typography } from '@material-ui/core'
-import React from 'react'
+import { Typography } from '@material-ui/core'
+import React, { useEffect } from 'react'
 import { wrapper } from '../redux/store'
 import { getPopularMoviesApi } from '../components/api/api'
 import {
@@ -9,20 +9,20 @@ import {
 } from '../redux/slices/popularMoviesSlice'
 import { useDispatch } from 'react-redux'
 import { MoviesList } from '../components/movies/MoviesList'
-import { Pagination } from '@material-ui/lab'
 import { usePopularMovies } from '../redux/selectors/selectors'
 import { AxiosResponse } from 'axios'
+import { useRouter } from 'next/router'
 
 export default function Popular(): React.ReactElement {
   const { data } = usePopularMovies()
   const dispatch = useDispatch()
+  const router = useRouter()
 
-  const handlePaginationChange = (
-    e: React.ChangeEvent<unknown>,
-    value: number
-  ): void => {
-    dispatch(getPopularMovies(value))
-  }
+  const page = Number(router.query.page) || 1
+
+  useEffect(() => {
+    dispatch(getPopularMovies(page))
+  }, [page])
 
   return (
     <>
@@ -32,15 +32,7 @@ export default function Popular(): React.ReactElement {
       <Typography variant={'h4'} align={'center'}>
         POPULAR
       </Typography>
-      <MoviesList movies={data.results} />
-      <Box display={'flex'} justifyContent={'center'}>
-        <Pagination
-          onChange={handlePaginationChange}
-          count={data.total_pages}
-          variant='outlined'
-          color='primary'
-        />
-      </Box>
+      <MoviesList data={data} page={page} />
     </>
   )
 }
