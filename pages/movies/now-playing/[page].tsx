@@ -9,22 +9,27 @@ import { wrapper } from '../../../redux/store'
 import { AxiosResponse } from 'axios'
 import { getNowPlayingMoviesApi } from '../../../components/api/api'
 import { Pagination } from '@material-ui/lab'
+import { useScrollMemory } from '../../../components/hooks/useScrollMemory'
 
-export default function NowPlaying(): React.ReactElement {
+export default function NowPlaying(): JSX.Element {
   const router = useRouter()
   const { data } = usePlayingMovies()
+  useScrollMemory()
 
   const page = Number(router.query.page) || 1
+  const pagePath = '/movies/now-playing/'
 
   const handlePaginationChange = (
     e: React.ChangeEvent<unknown>,
     value: number
   ): void => {
-    router.push(`/movies/now-playing/${value}`)
+    router.push(pagePath + value).then(() => {
+      sessionStorage.clear()
+    })
   }
 
   return (
-    <>
+    <div>
       <Head>
         <title>Moviex | Now playing</title>
       </Head>
@@ -42,7 +47,7 @@ export default function NowPlaying(): React.ReactElement {
           color='primary'
         />
       </Box>
-    </>
+    </div>
   )
 }
 

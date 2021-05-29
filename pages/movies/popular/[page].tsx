@@ -9,10 +9,12 @@ import { AxiosResponse } from 'axios'
 import { getPopularMoviesApi } from '../../../components/api/api'
 import { Pagination } from '@material-ui/lab'
 import { setPopularMovies } from '../../../redux/slices/popularMoviesSlice'
+import { useScrollMemory } from '../../../components/hooks/useScrollMemory'
 
 export default function NowPlaying(): React.ReactElement {
   const router = useRouter()
   const { data } = usePopularMovies()
+  useScrollMemory()
 
   const page = Number(router.query.page) || 1
 
