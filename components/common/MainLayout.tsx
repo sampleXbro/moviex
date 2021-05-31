@@ -29,9 +29,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { useRouter } from 'next/router'
-import { getSearchedMoviesApi } from '../api/api'
 import { LiveSearch } from './LiveSearch'
-import { Movie } from '../../types/types'
 
 const drawerWidth = 240
 
@@ -170,7 +168,8 @@ export default function MainLayout({
   const [open, setOpen] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
-  const [movies, setMovies] = React.useState<Array<Movie>>([])
+  const [searchStr, setSearchStr] = React.useState<string>('')
+
   const [isLiveSearchVisible, setIsLiveSearchVisible] =
     React.useState<boolean>(false)
 
@@ -231,11 +230,7 @@ export default function MainLayout({
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const { value } = event.target
-    if (value.length > 2) {
-      getSearchedMoviesApi(value).then((res) => setMovies(res.data.results))
-    } else {
-      setMovies([])
-    }
+    setSearchStr(value)
   }
 
   const menuId = 'primary-search-account-menu'
@@ -305,11 +300,12 @@ export default function MainLayout({
             MOVIEX
           </Typography>
           <div className={classes.search} style={{ width: '450px' }}>
-            {isLiveSearchVisible && <LiveSearch movies={movies} />}
+            {isLiveSearchVisible && <LiveSearch searchStr={searchStr} />}
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
+              value={searchStr}
               onChange={handleSearchInputChange}
               placeholder='Search…'
               classes={{

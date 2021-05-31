@@ -61,6 +61,10 @@ export type MoviesState = {
   isLoading: boolean
 }
 
+export type MoviesListProps = {
+  movies: Array<Movie>
+}
+
 export type FullState = {
   playingMovies: MoviesState
   popularMovies: MoviesState

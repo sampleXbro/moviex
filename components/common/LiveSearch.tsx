@@ -1,15 +1,59 @@
 import { Box, Divider, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Movie } from '../../types/types'
+import { getSearchedMoviesApi } from '../api/api'
 
-type MoviesListProps = {
-  movies: Array<Movie>
+type LiveSearchProps = {
+  searchStr: string
 }
 
-export const LiveSearch = ({ movies }: MoviesListProps): React.ReactElement => {
+let page = 2
+let isFetched = false
+
+export const LiveSearch = ({
+  searchStr,
+}: LiveSearchProps): React.ReactElement => {
   const router = useRouter()
+  const [movies, setMovies] = React.useState<Array<Movie>>([])
+  const ref: React.Ref<HTMLDivElement> = useRef(null)
+
+  useEffect(() => {
+    const el = ref.current
+
+    if (searchStr.length > 2) {
+      getSearchedMoviesApi(searchStr).then((res) => setMovies(res.data.results))
+    } else {
+      setMovies([])
+    }
+
+    el?.addEventListener('scroll', handleScroll)
+    return () => el?.removeEventListener('scroll', handleScroll)
+  }, [searchStr])
+
+  const handleScroll = () => {
+    // infinite scroll
+    const el = ref.current
+
+    if (el && el.scrollTop > el.scrollHeight - el.clientHeight - 150) {
+      if (!isFetched) {
+        page++
+        getSearchedMoviesApi(searchStr, page).then((res) => {
+          setMovies((prev) => {
+            // prevent duplications from backend
+            const data = res.data.results.filter(
+              (mov: Movie) => !prev.some((m) => m.id === mov.id)
+            )
+            return [...prev, ...data]
+          })
+        })
+        isFetched = true
+      }
+    } else {
+      isFetched = false
+    }
+  }
 
   const handleSearchItemClick = (id: number): void => {
     router.push(`/movies/${id}`)
@@ -17,7 +61,7 @@ export const LiveSearch = ({ movies }: MoviesListProps): React.ReactElement => {
 
   const renderMovies = (): React.ReactNode => {
     return movies.map((mov) => (
-      <div id={'searchList'} key={mov.id}>
+      <div key={mov.id}>
         <Box
           display={'flex'}
           alignItems={'center'}
@@ -52,12 +96,12 @@ export const LiveSearch = ({ movies }: MoviesListProps): React.ReactElement => {
     flexDirection: 'column',
     backgroundColor: 'white',
     padding: '5px',
-    overflowX: 'auto',
+    overflow: 'auto',
     zIndex: 999,
   }
 
   return (
-    <div style={styles}>
+    <div style={styles} ref={ref}>
       {movies.length ? renderMovies() : <Typography>No results :(</Typography>}
     </div>
   )
