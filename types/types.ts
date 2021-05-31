@@ -114,3 +114,21 @@ export type SingleMovieState = {
 export type FullSingleMovieState = {
   singleMovie: SingleMovieState
 }
+
+export type Token = {
+  request_token: string
+  expires_at: string
+  success: boolean
+}
+
+export type LoginData = {
+  username: string
+  password: string
+  request_token: string
+}
+
+export type AuthState = {
+  success: boolean
+  request_token: string
+  expires_at: string
+}

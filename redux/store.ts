@@ -9,12 +9,14 @@ import { rootSaga } from './sagas/rootSaga'
 import playingMovies from './slices/playingMoviesSlice'
 import popularMovies from './slices/popularMoviesSlice'
 import singleMovie from './slices/singleMovieSlice'
+import auth from './slices/authSlice'
 import { createWrapper } from 'next-redux-wrapper'
 
 const reducer = combineReducers({
   playingMovies,
   popularMovies,
   singleMovie,
+  auth,
 })
 
 export const makeStore = (): Store => {

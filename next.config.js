@@ -3,7 +3,7 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/now-playing',
+        destination: '/movies/now-playing/1',
         permanent: true,
       },
     ]
