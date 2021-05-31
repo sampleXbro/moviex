@@ -10,8 +10,9 @@ import { getPopularMoviesApi } from '../../../components/api/api'
 import { Pagination } from '@material-ui/lab'
 import { setPopularMovies } from '../../../redux/slices/popularMoviesSlice'
 import { useScrollMemory } from '../../../components/hooks/useScrollMemory'
+import { withAuthCheck } from '../../../components/HOCs/withAuthCheck'
 
-export default function NowPlaying(): React.ReactElement {
+function Popular(): React.ReactElement {
   const router = useRouter()
   const { data } = usePopularMovies()
   useScrollMemory()
@@ -28,7 +29,7 @@ export default function NowPlaying(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>Moviex | Now playing</title>
+        <title>Moviex | Popular</title>
       </Head>
 
       <Typography variant={'h4'} align={'center'}>
@@ -47,6 +48,8 @@ export default function NowPlaying(): React.ReactElement {
     </>
   )
 }
+
+export default withAuthCheck(Popular)
 
 export const getStaticProps = wrapper.getStaticProps(
   async ({ store, params }) => {

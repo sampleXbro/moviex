@@ -7,12 +7,13 @@ import Image from 'next/image'
 import React from 'react'
 import axios, { AxiosResponse } from 'axios'
 import ReactPlayer from 'react-player/youtube'
+import { withAuthCheck } from '../../components/HOCs/withAuthCheck'
 
-export default function MoviePage() {
+function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()
   const genres: string = data.genres.map((g) => g.name).join(', ')
 
-  const renderVideos = () => {
+  const renderVideos = (): React.ReactNode => {
     return videos.map((vid) => (
       <Box
         display={'flex'}
@@ -85,6 +86,8 @@ export default function MoviePage() {
     </Paper>
   )
 }
+
+export default withAuthCheck(MoviePage)
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async ({ store, params }) => {

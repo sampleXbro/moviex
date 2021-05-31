@@ -10,8 +10,9 @@ import { AxiosResponse } from 'axios'
 import { getNowPlayingMoviesApi } from '../../../components/api/api'
 import { Pagination } from '@material-ui/lab'
 import { useScrollMemory } from '../../../components/hooks/useScrollMemory'
+import { withAuthCheck } from '../../../components/HOCs/withAuthCheck'
 
-export default function NowPlaying(): JSX.Element {
+function NowPlaying(): JSX.Element {
   const router = useRouter()
   const { data } = usePlayingMovies()
   useScrollMemory()
@@ -50,6 +51,8 @@ export default function NowPlaying(): JSX.Element {
     </div>
   )
 }
+
+export default withAuthCheck(NowPlaying)
 
 export const getStaticProps = wrapper.getStaticProps(
   async ({ store, params }) => {
