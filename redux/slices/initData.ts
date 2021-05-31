@@ -1,4 +1,6 @@
-export const moviesInitData = {
+import { MoviesListResponse, MoviesState } from '../../types/types'
+
+export const moviesInitData: MoviesListResponse = {
   dates: { maximum: '', minimum: '' },
   page: 1,
   results: [],
@@ -6,7 +8,7 @@ export const moviesInitData = {
   total_results: 1,
 }
 
-export const initialMoviesState = {
+export const initialMoviesState: MoviesState = {
   data: moviesInitData,
   isLoading: false,
 }

@@ -177,7 +177,7 @@ export default function MainLayout({
     React.useState<null | HTMLElement>(null)
 
   useEffect(() => {
-    const handleClickListener = (e: any): void => {
+    const handleClickListener = (e: any) => {
       if (e.target.id === 'searchList' || e.target.id === 'searchInput') {
         setIsLiveSearchVisible(true)
       } else {

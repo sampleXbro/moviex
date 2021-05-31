@@ -11,6 +11,8 @@ import { getNowPlayingMoviesApi } from '../../../components/api/api'
 import { Pagination } from '@material-ui/lab'
 import { useScrollMemory } from '../../../components/hooks/useScrollMemory'
 import { withAuthCheck } from '../../../components/HOCs/withAuthCheck'
+import { GetStaticPathsResult } from 'next'
+import { Paths } from '../../../types/types'
 
 function NowPlaying(): JSX.Element {
   const router = useRouter()
@@ -64,9 +66,9 @@ export const getStaticProps = wrapper.getStaticProps(
   }
 )
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = async (): Promise<GetStaticPathsResult> => {
   const { data }: AxiosResponse = await getNowPlayingMoviesApi(1)
-  const paths = []
+  const paths: Paths = []
 
   for (let i = 0; i < data.total_pages; i++) {
     paths.push({ params: { page: String(i + 1) } })

@@ -11,6 +11,8 @@ import { Pagination } from '@material-ui/lab'
 import { setPopularMovies } from '../../../redux/slices/popularMoviesSlice'
 import { useScrollMemory } from '../../../components/hooks/useScrollMemory'
 import { withAuthCheck } from '../../../components/HOCs/withAuthCheck'
+import { GetStaticPathsResult } from 'next'
+import { Paths } from '../../../types/types'
 
 function Popular(): React.ReactElement {
   const router = useRouter()
@@ -61,9 +63,9 @@ export const getStaticProps = wrapper.getStaticProps(
   }
 )
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = async (): Promise<GetStaticPathsResult> => {
   const { data }: AxiosResponse = await getPopularMoviesApi(1)
-  const paths = []
+  const paths: Paths = []
 
   for (let i = 0; i < data.total_pages; i++) {
     paths.push({ params: { page: String(i + 1) } })

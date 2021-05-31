@@ -78,7 +78,7 @@ export default function SecondRegForm({
     />
   ))
 
-  const prevHandler = () => {
+  const prevHandler = (): void => {
     router.replace('/register/1')
   }
 

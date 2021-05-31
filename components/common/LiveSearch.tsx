@@ -32,7 +32,7 @@ export const LiveSearch = ({
     return () => el?.removeEventListener('scroll', handleScroll)
   }, [searchStr])
 
-  const handleScroll = () => {
+  const handleScroll = (): void => {
     // infinite scroll
     const el = ref.current
 
@@ -59,7 +59,7 @@ export const LiveSearch = ({
     router.push(`/movies/${id}`)
   }
 
-  const renderMovies = (): React.ReactNode => {
+  const renderMovies = (): JSX.Element[] => {
     return movies.map((mov) => (
       <div key={mov.id}>
         <Box

@@ -1,5 +1,3 @@
-import { moviesInitData } from '../redux/slices/initData'
-
 export type NextRegFormsProps = {
   setIsLoading: (val: boolean) => void
   maxSteps: number
@@ -54,7 +52,13 @@ export type Genre = {
   name: string
 }
 
-export type MoviesListResponse = typeof moviesInitData
+export type MoviesListResponse = {
+  dates: { maximum: string; minimum: string }
+  page: number
+  results: Array<Movie>
+  total_pages: number
+  total_results: number
+}
 
 export type MoviesState = {
   data: MoviesListResponse
@@ -132,7 +136,18 @@ export type LoginData = {
 }
 
 export type AuthState = {
-  success: boolean
-  request_token: string
-  expires_at: string
+  token: {
+    success: boolean
+    request_token: string
+    expires_at: string
+  }
+  sessionId: string
+  isLoading: boolean
+  error: string | null
 }
+
+export type AuthFullState = {
+  auth: AuthState
+}
+
+export type Paths = Array<{ params: { page: string } }>

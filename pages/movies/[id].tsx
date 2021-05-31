@@ -13,7 +13,7 @@ function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()
   const genres: string = data.genres.map((g) => g.name).join(', ')
 
-  const renderVideos = (): React.ReactNode => {
+  const renderVideos = (): JSX.Element[] => {
     return videos.map((vid) => (
       <Box
         display={'flex'}

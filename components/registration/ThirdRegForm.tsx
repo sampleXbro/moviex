@@ -94,7 +94,7 @@ export default function ThirdRegForm({
     />
   ))
 
-  const prevHandler = () => {
+  const prevHandler = (): void => {
     router.replace('/register/2')
   }
 
