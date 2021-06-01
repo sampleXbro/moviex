@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 export const useScrollMemory = (): void => {
   const router = useRouter()
+
   useEffect(() => {
     if (
       document.body.scrollHeight > Number(sessionStorage.getItem(router.asPath))

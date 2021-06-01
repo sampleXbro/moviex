@@ -23,9 +23,7 @@ const RegSchema: BaseSchema = Yup.object({
     .required('Favorite film is required'),
 })
 
-export default function SecondRegForm({
-  maxSteps,
-}: NextRegFormsProps): React.ReactElement {
+const SecondRegForm: React.FC<NextRegFormsProps> = ({ maxSteps }) => {
   const router = useRouter()
 
   const step = Number(router.query.step)
@@ -110,3 +108,5 @@ export default function SecondRegForm({
     </form>
   )
 }
+
+export default SecondRegForm

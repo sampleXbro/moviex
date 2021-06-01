@@ -74,6 +74,10 @@ export type FullState = {
   popularMovies: MoviesState
 }
 
+export type FullFavoriteMoviesState = {
+  favoriteMovies: MoviesState
+}
+
 export type SingleMovie = {
   adult: boolean
   backdrop_path: string

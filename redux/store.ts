@@ -10,6 +10,7 @@ import playingMovies from './slices/playingMoviesSlice'
 import popularMovies from './slices/popularMoviesSlice'
 import singleMovie from './slices/singleMovieSlice'
 import auth from './slices/authSlice'
+import favoriteMovies from './slices/favoriteMoviesSlice'
 import { createWrapper } from 'next-redux-wrapper'
 
 const reducer = combineReducers({
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   popularMovies,
   singleMovie,
   auth,
+  favoriteMovies,
 })
 
 export const makeStore = (): Store => {
@@ -32,4 +34,4 @@ export const makeStore = (): Store => {
   return store
 }
 
-export const wrapper = createWrapper(makeStore, { debug: true })
+export const wrapper = createWrapper(makeStore, { debug: false })

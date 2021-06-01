@@ -35,7 +35,7 @@ function Popular(): React.ReactElement {
       </Head>
 
       <Typography variant={'h4'} align={'center'}>
-        NOW PLAYING
+        POPULAR MOVIES
       </Typography>
       <MoviesList data={data} />
       <Box display={'flex'} justifyContent={'center'}>

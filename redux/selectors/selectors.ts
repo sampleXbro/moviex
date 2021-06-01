@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import {
   AuthFullState,
   AuthState,
+  FullFavoriteMoviesState,
   FullSingleMovieState,
   FullState,
   MoviesState,
@@ -19,3 +20,6 @@ export const useMovie = (): SingleMovieState =>
 
 export const useAuth = (): AuthState =>
   useSelector((state: AuthFullState) => state.auth)
+
+export const useFavoriteMovies = (): MoviesState =>
+  useSelector((state: FullFavoriteMoviesState) => state.favoriteMovies)

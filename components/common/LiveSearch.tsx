@@ -12,9 +12,7 @@ type LiveSearchProps = {
 let page = 2
 let isFetched = false
 
-export const LiveSearch = ({
-  searchStr,
-}: LiveSearchProps): React.ReactElement => {
+export const LiveSearch: React.FC<LiveSearchProps> = ({ searchStr }) => {
   const router = useRouter()
   const [movies, setMovies] = React.useState<Array<Movie>>([])
   const ref: React.Ref<HTMLDivElement> = useRef(null)

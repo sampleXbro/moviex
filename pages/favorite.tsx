@@ -2,24 +2,21 @@ import { withAuthCheck } from '../components/HOCs/withAuthCheck'
 import Head from 'next/head'
 import { Typography } from '@material-ui/core'
 import { MoviesList } from '../components/movies/MoviesList'
-import React, { useEffect, useState } from 'react'
-import { MoviesListResponse } from '../types/types'
-import { useAuth } from '../redux/selectors/selectors'
-import { getFavoriteMoviesApi } from '../components/api/api'
+import React, { useEffect } from 'react'
+import { useAuth, useFavoriteMovies } from '../redux/selectors/selectors'
+
 import { CustomCircularProgress } from '../components/common/CustomCircularProgress'
-import { moviesInitData } from '../redux/slices/initData'
+import { useDispatch } from 'react-redux'
+import { getFavoriteMovies } from '../redux/slices/favoriteMoviesSlice'
 
 const Favorite = (): JSX.Element => {
-  const [data, setData] = useState<MoviesListResponse>(moviesInitData)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const { data, isLoading } = useFavoriteMovies()
   const authData = useAuth()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    getFavoriteMoviesApi(authData.sessionId).then((res) => {
-      setData(res.data)
-      setIsLoading(false)
-    })
-  }, [authData.sessionId])
+    dispatch(getFavoriteMovies(authData.sessionId))
+  }, [dispatch, authData.sessionId])
 
   if (isLoading) return <CustomCircularProgress />
 
