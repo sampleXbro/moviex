@@ -1,4 +1,4 @@
-import { PlayCircleOutline, Whatshot } from '@material-ui/icons'
+import { PlayCircleOutline, StarBorder, Whatshot } from '@material-ui/icons'
 import clsx from 'clsx'
 import {
   createStyles,
@@ -189,8 +189,9 @@ export default function MainLayout({
   }, [])
 
   const links = [
-    { title: 'Now playing', path: '/movies/now-playing/1' },
-    { title: 'Popular', path: '/movies/popular/1' },
+    { id: 1, title: 'Now playing', path: '/movies/now-playing/1' },
+    { id: 2, title: 'Popular', path: '/movies/popular/1' },
+    { id: 3, title: 'Favorite', path: '/favorite' },
   ]
 
   const handleDrawerOpen = (): void => {
@@ -368,7 +369,7 @@ export default function MainLayout({
         </div>
         <Divider />
         <List>
-          {links.map(({ title, path }, index) => (
+          {links.map(({ title, path, id }, index) => (
             <ListItem
               selected={
                 path.split('/').slice(0, -1).join('/') ===
@@ -379,7 +380,9 @@ export default function MainLayout({
               onClick={() => router.push(path)}
             >
               <ListItemIcon>
-                {title === 'Popular' ? <Whatshot /> : <PlayCircleOutline />}
+                {id === 1 && <Whatshot />}
+                {id === 2 && <PlayCircleOutline />}
+                {id === 3 && <StarBorder />}
               </ListItemIcon>
               <ListItemText primary={title} />
             </ListItem>

@@ -1,24 +1,34 @@
 import { wrapper } from '../../redux/store'
 import { setMovie } from '../../redux/slices/singleMovieSlice'
-import { useMovie } from '../../redux/selectors/selectors'
-import { getMovieApi, getMovieVideosApi } from '../../components/api/api'
+import { useAuth, useMovie } from '../../redux/selectors/selectors'
+import {
+  changeFavoritesApi,
+  getFavoriteMoviesApi,
+  getMovieApi,
+  getMovieVideosApi,
+} from '../../components/api/api'
 import { Box, Divider, Paper, Typography } from '@material-ui/core'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
 import ReactPlayer from 'react-player/youtube'
 import { withAuthCheck } from '../../components/HOCs/withAuthCheck'
 import { Star, StarBorder } from '@material-ui/icons'
+import { Movie } from '../../types/types'
 
 function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()
+  const authData = useAuth()
+  const [isFavorite, setIsFavorite] = useState(false)
 
-  const favorites: Array<string> = JSON.parse(
-    localStorage.getItem('moviex/favorites') || '[]'
-  )
-  const isFavorite = favorites.includes(String(data.id))
+  useEffect(() => {
+    getFavoriteMoviesApi(authData.sessionId).then((res) => {
+      if (res.data.results.some((fav: Movie) => fav.id === data.id)) {
+        setIsFavorite(true)
+      }
+    })
+  }, [authData.sessionId, data.id])
 
-  const [favorite, setFavorite] = useState(isFavorite)
   const genres: string = data.genres.map((g) => g.name).join(', ')
 
   const renderVideos = (): JSX.Element[] => {
@@ -37,19 +47,11 @@ function MoviePage(): JSX.Element {
   }
 
   const handleFavoriteClick = (): void => {
-    if (isFavorite) {
-      localStorage.setItem(
-        'moviex/favorites',
-        JSON.stringify(
-          favorites.filter((fav: string) => Number(fav) !== data.id)
-        )
-      )
-      setFavorite(false)
-    } else {
-      favorites.push(String(data.id))
-      localStorage.setItem('moviex/favorites', JSON.stringify(favorites))
-      setFavorite(true)
-    }
+    changeFavoritesApi(String(data.id), authData.sessionId, !isFavorite).then(
+      () => {
+        setIsFavorite(!isFavorite)
+      }
+    )
   }
 
   return (
@@ -84,7 +86,7 @@ function MoviePage(): JSX.Element {
               alignItems={'center'}
             >
               <Typography variant={'h4'}>{data.title}</Typography>
-              {favorite ? (
+              {isFavorite ? (
                 <Star
                   color={'primary'}
                   fontSize={'large'}
