@@ -59,3 +59,24 @@ export const createSessionApi = (request_token: string): AxiosPromise => {
     { request_token }
   )
 }
+
+export const getFavoriteMoviesApi = (sessionId: string): AxiosPromise => {
+  return Axios.get(
+    `https://api.themoviedb.org/3/account/{account_id}/favorite/movies?api_key=${apiKey}&session_id=${sessionId}`
+  )
+}
+
+export const changeFavoritesApi = (
+  movieId: string,
+  sessionId: string,
+  isFavorite: boolean
+): AxiosPromise => {
+  return Axios.post(
+    `https://api.themoviedb.org/3/account/{account_id}/favorite?api_key=${apiKey}&session_id=${sessionId}`,
+    {
+      media_type: 'movie',
+      media_id: movieId,
+      favorite: isFavorite,
+    }
+  )
+}
