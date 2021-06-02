@@ -1,5 +1,5 @@
 import axios, { AxiosPromise } from 'axios'
-import { LoginData } from '../../types/types'
+import { LoginData } from '../types/types'
 
 const apiKey = process.env.NEXT_PUBLIC_API_KEY
 

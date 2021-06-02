@@ -7,7 +7,7 @@ import { Box, Typography } from '@material-ui/core'
 import { MoviesList } from '../../../components/movies/MoviesList'
 import { wrapper } from '../../../redux/store'
 import { AxiosResponse } from 'axios'
-import { getNowPlayingMoviesApi } from '../../../components/api/api'
+import { getNowPlayingMoviesApi } from '../../../api/api'
 import { Pagination } from '@material-ui/lab'
 import { useScrollMemory } from '../../../components/hooks/useScrollMemory'
 import { withAuthCheck } from '../../../components/HOCs/withAuthCheck'
@@ -20,13 +20,13 @@ function NowPlaying(): JSX.Element {
   useScrollMemory()
 
   const page = Number(router.query.page) || 1
-  const pagePath = '/movies/now-playing/'
+  const pagePath = router.asPath.split('/').slice(0, -1).join('/')
 
   const handlePaginationChange = (
     e: React.ChangeEvent<unknown>,
     value: number
   ): void => {
-    router.push(pagePath + value).then(() => {
+    router.push(pagePath + '/' + value).then(() => {
       sessionStorage.clear()
     })
   }

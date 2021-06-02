@@ -11,7 +11,7 @@ import { FormikTextField } from '../components/common/FormikTextField'
 import { useFormik } from 'formik'
 import { BaseSchema } from 'yup'
 import * as Yup from 'yup'
-import { createRequestTokenApi } from '../components/api/api'
+import { createRequestTokenApi } from '../api/api'
 import { useRouter } from 'next/router'
 import { Token } from '../types/types'
 import { useDispatch } from 'react-redux'
@@ -72,7 +72,7 @@ export default function SignIn(): JSX.Element {
         setToken(data)
       })
     }
-  }, [])
+  }, [router])
 
   return (
     <>
@@ -81,39 +81,37 @@ export default function SignIn(): JSX.Element {
       </Head>
       <Box maxWidth={'450px'} margin={'0 auto'}>
         <form onSubmit={formik.handleSubmit}>
-          <Paper elevation={3} style={{ padding: '15px', marginTop: '20px' }}>
-            <Typography
-              variant={'h5'}
-              align={'center'}
-              style={{ marginTop: '25px' }}
-            >
-              Login
-            </Typography>
-            <FormHelperText error>{error}</FormHelperText>
-            <FormikTextField
-              fullWidth
-              formik={formik}
-              name={'username'}
-              label={'Login'}
-              type={'text'}
-            />
-            <FormikTextField
-              fullWidth
-              formik={formik}
-              name={'password'}
-              label={'Password'}
-              type={'password'}
-            />
+          <Paper elevation={3}>
+            <Box padding={'15px'} marginTop={'20px'}>
+              <Typography variant={'h5'} align={'center'}>
+                Login
+              </Typography>
+              <FormHelperText error>{error}</FormHelperText>
+              <FormikTextField
+                fullWidth
+                formik={formik}
+                name={'username'}
+                label={'Login'}
+                type={'text'}
+              />
+              <FormikTextField
+                fullWidth
+                formik={formik}
+                name={'password'}
+                label={'Password'}
+                type={'password'}
+              />
 
-            <Button
-              fullWidth
-              color='primary'
-              variant='contained'
-              type={'submit'}
-              disabled={!token.request_token}
-            >
-              SIGN IN
-            </Button>
+              <Button
+                fullWidth
+                color='primary'
+                variant='contained'
+                type={'submit'}
+                disabled={!token.request_token}
+              >
+                SIGN IN
+              </Button>
+            </Box>
           </Paper>
         </form>
       </Box>

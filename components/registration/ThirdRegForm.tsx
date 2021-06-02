@@ -100,17 +100,16 @@ const ThirdRegForm: React.FC<NextRegFormsProps> = ({ maxSteps }) => {
     step === maxSteps ? 'Complete' : 'NEXT'
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      style={{
-        display: 'flex',
-        height: '600px',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        overflow: 'auto',
-      }}
-    >
-      <Box style={{ overflow: 'auto' }}>{renderInputs}</Box>
+    <form onSubmit={formik.handleSubmit}>
+      <Box
+        overflow={'auto'}
+        display={'flex'}
+        height={'600px'}
+        flexDirection={'column'}
+        justifyContent={'space-between'}
+      >
+        {renderInputs}
+      </Box>
 
       <Box display={'flex'} justifyContent={'space-between'}>
         <Button color='primary' variant='contained' onClick={prevHandler}>

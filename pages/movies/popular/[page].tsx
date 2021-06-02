@@ -6,7 +6,7 @@ import { Box, Typography } from '@material-ui/core'
 import { MoviesList } from '../../../components/movies/MoviesList'
 import { wrapper } from '../../../redux/store'
 import { AxiosResponse } from 'axios'
-import { getPopularMoviesApi } from '../../../components/api/api'
+import { getPopularMoviesApi } from '../../../api/api'
 import { Pagination } from '@material-ui/lab'
 import { setPopularMovies } from '../../../redux/slices/popularMoviesSlice'
 import { useScrollMemory } from '../../../components/hooks/useScrollMemory'
@@ -20,12 +20,15 @@ function Popular(): React.ReactElement {
   useScrollMemory()
 
   const page = Number(router.query.page) || 1
+  const pagePath = router.asPath.split('/').slice(0, -1).join('/')
 
   const handlePaginationChange = (
     e: React.ChangeEvent<unknown>,
     value: number
   ): void => {
-    router.push(`/movies/popular/${value}`)
+    router.push(pagePath + '/' + value).then(() => {
+      sessionStorage.clear()
+    })
   }
 
   return (

@@ -1,21 +1,44 @@
-import { Box, Divider, Typography } from '@material-ui/core'
-import React, { useEffect, useRef } from 'react'
+import { Box, Typography } from '@material-ui/core'
+import React, { useCallback, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Movie } from '../../types/types'
-import { getSearchedMoviesApi } from '../api/api'
+import { getSearchedMoviesApi } from '../../api/api'
+import { CustomDivider } from './CustomDivider'
 
 type LiveSearchProps = {
   searchStr: string
 }
 
-let page = 2
-let isFetched = false
-
 export const LiveSearch: React.FC<LiveSearchProps> = ({ searchStr }) => {
   const router = useRouter()
   const [movies, setMovies] = React.useState<Array<Movie>>([])
   const ref: React.Ref<HTMLDivElement> = useRef(null)
+  const scrollVarsRef = useRef({ page: 2, isFetched: false })
+
+  const handleScroll = useCallback(() => {
+    // infinite scroll
+    const el = ref.current
+    const scrollVars = scrollVarsRef.current
+
+    if (el && el.scrollTop > el.scrollHeight - el.clientHeight - 150) {
+      if (!scrollVars.isFetched) {
+        scrollVars.page++
+        getSearchedMoviesApi(searchStr, scrollVars.page).then((res) => {
+          setMovies((prev) => {
+            // prevent duplications from backend
+            const data = res.data.results.filter(
+              (mov: Movie) => !prev.some((m) => m.id === mov.id)
+            )
+            return [...prev, ...data]
+          })
+        })
+        scrollVars.isFetched = true
+      }
+    } else {
+      scrollVars.isFetched = false
+    }
+  }, [searchStr])
 
   useEffect(() => {
     const el = ref.current
@@ -28,30 +51,7 @@ export const LiveSearch: React.FC<LiveSearchProps> = ({ searchStr }) => {
 
     el?.addEventListener('scroll', handleScroll)
     return () => el?.removeEventListener('scroll', handleScroll)
-  }, [searchStr])
-
-  const handleScroll = (): void => {
-    // infinite scroll
-    const el = ref.current
-
-    if (el && el.scrollTop > el.scrollHeight - el.clientHeight - 150) {
-      if (!isFetched) {
-        page++
-        getSearchedMoviesApi(searchStr, page).then((res) => {
-          setMovies((prev) => {
-            // prevent duplications from backend
-            const data = res.data.results.filter(
-              (mov: Movie) => !prev.some((m) => m.id === mov.id)
-            )
-            return [...prev, ...data]
-          })
-        })
-        isFetched = true
-      }
-    } else {
-      isFetched = false
-    }
-  }
+  }, [searchStr, handleScroll])
 
   const handleSearchItemClick = (id: number): void => {
     router.push(`/movies/${id}`)
@@ -74,11 +74,7 @@ export const LiveSearch: React.FC<LiveSearchProps> = ({ searchStr }) => {
           />
           <Typography style={{ marginLeft: '10px' }}>{mov.title}</Typography>
         </Box>
-        <Divider
-          color={'black'}
-          flexItem
-          style={{ height: '1px', margin: '5px 0' }}
-        />
+        <CustomDivider />
       </div>
     ))
   }
