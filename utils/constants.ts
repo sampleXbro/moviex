@@ -15,8 +15,8 @@ export const routes = [
 ]
 
 const icons: Icons = {
-  1: Whatshot,
-  2: PlayCircleOutline,
+  1: PlayCircleOutline,
+  2: Whatshot,
   3: StarBorder,
 }
 

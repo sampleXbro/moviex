@@ -4,7 +4,6 @@ import { Typography } from '@material-ui/core'
 import { MoviesList } from '../components/movies/MoviesList'
 import React, { useEffect } from 'react'
 import { useAuth, useFavoriteMovies } from '../redux/selectors/selectors'
-
 import { CustomCircularProgress } from '../components/common/CustomCircularProgress'
 import { useDispatch } from 'react-redux'
 import { getFavoriteMovies } from '../redux/slices/favoriteMoviesSlice'
@@ -18,8 +17,6 @@ const Favorite = (): JSX.Element => {
     dispatch(getFavoriteMovies(authData.sessionId))
   }, [dispatch, authData.sessionId])
 
-  if (isLoading) return <CustomCircularProgress />
-
   return (
     <>
       <Head>
@@ -29,10 +26,14 @@ const Favorite = (): JSX.Element => {
       <Typography variant={'h4'} align={'center'}>
         YOUR FAVORITE MOVIES
       </Typography>
-      {!data.results.length && (
-        <Typography align={'center'}>
-          You have no favorite movies at the moment
-        </Typography>
+      {isLoading ? (
+        <CustomCircularProgress />
+      ) : (
+        !data.results.length && (
+          <Typography align={'center'}>
+            You have no favorite movies at the moment
+          </Typography>
+        )
       )}
       <MoviesList data={data} reversed />
     </>
