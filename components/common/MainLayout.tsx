@@ -1,4 +1,3 @@
-import { PlayCircleOutline, Whatshot } from '@material-ui/icons'
 import clsx from 'clsx'
 import {
   createStyles,
@@ -30,6 +29,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { useRouter } from 'next/router'
 import { LiveSearch } from './LiveSearch'
+import { getIcon, routes } from '../../utils/constants'
 
 const drawerWidth = 240
 
@@ -154,13 +154,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-type MainLayout = {
-  children: React.ReactNode
-}
-
-export default function MainLayout({
-  children,
-}: MainLayout): React.ReactElement {
+const MainLayout: React.FC = ({ children }) => {
   const classes = useStyles()
   const theme = useTheme()
   const router = useRouter()
@@ -187,11 +181,6 @@ export default function MainLayout({
     window.addEventListener('click', handleClickListener)
     return () => window.removeEventListener('click', handleClickListener)
   }, [])
-
-  const links = [
-    { title: 'Now playing', path: '/movies/now-playing/1' },
-    { title: 'Popular', path: '/movies/popular/1' },
-  ]
 
   const handleDrawerOpen = (): void => {
     setOpen(true)
@@ -368,22 +357,25 @@ export default function MainLayout({
         </div>
         <Divider />
         <List>
-          {links.map(({ title, path }, index) => (
-            <ListItem
-              selected={
-                path.split('/').slice(0, -1).join('/') ===
-                router.asPath.split('/').slice(0, -1).join('/')
-              }
-              button
-              key={path + index}
-              onClick={() => router.push(path)}
-            >
-              <ListItemIcon>
-                {title === 'Popular' ? <Whatshot /> : <PlayCircleOutline />}
-              </ListItemIcon>
-              <ListItemText primary={title} />
-            </ListItem>
-          ))}
+          {routes.map(({ title, path, id }, index) => {
+            const Icon = getIcon(id)
+            return (
+              <ListItem
+                selected={
+                  path.split('/').slice(0, -1).join('/') ===
+                  router.asPath.split('/').slice(0, -1).join('/')
+                }
+                button
+                key={path + index}
+                onClick={() => router.push(path)}
+              >
+                <ListItemIcon>
+                  <Icon />
+                </ListItemIcon>
+                <ListItemText primary={title} />
+              </ListItem>
+            )
+          })}
         </List>
         <Divider />
       </Drawer>
@@ -394,3 +386,5 @@ export default function MainLayout({
     </div>
   )
 }
+
+export default MainLayout

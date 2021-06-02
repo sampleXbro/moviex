@@ -41,10 +41,10 @@ const RegSchema: BaseSchema = Yup.object({
   ),
 })
 
-export default function FirstRegForm({
+const FirstRegForm: React.FC<RegFormProps> = ({
   setIsLoading,
   setIsUploader,
-}: RegFormProps): React.ReactElement {
+}) => {
   const router = useRouter()
 
   const step = Number(router.query.step)
@@ -143,3 +143,5 @@ export default function FirstRegForm({
     </form>
   )
 }
+
+export default FirstRegForm

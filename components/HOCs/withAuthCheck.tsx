@@ -23,7 +23,7 @@ export const withAuthCheck = (Component: NextPage): NextPage => {
           })
         )
       }
-    }, [isTokenValid])
+    }, [isTokenValid, dispatch])
 
     if (!isTokenValid) {
       return <SignIn />

@@ -29,33 +29,49 @@ export const getMovieApi = (id: number): AxiosPromise => {
 }
 
 export const getMovieVideosApi = (id: number): AxiosPromise => {
-  return Axios.get(
-    `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`
-  )
+  return Axios.get(`/movie/${id}/videos?api_key=${apiKey}&language=en-US`)
 }
 
 export const getSearchedMoviesApi = (str = '', page = 1): AxiosPromise => {
   return Axios.get(
-    `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${str}&page=${page}&include_adult=false`
+    `/search/movie?api_key=${apiKey}&language=en-US&query=${str}&page=${page}&include_adult=false`
   )
 }
 
 export const createRequestTokenApi = (): AxiosPromise => {
-  return Axios.get(
-    `https://api.themoviedb.org/3/authentication/token/new?api_key=${apiKey}`
-  )
+  return Axios.get(`/authentication/token/new?api_key=${apiKey}`)
 }
 
 export const authApi = (data: LoginData): AxiosPromise => {
   return Axios.post(
-    `https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=${apiKey}`,
+    `/authentication/token/validate_with_login?api_key=${apiKey}`,
     data
   )
 }
 
 export const createSessionApi = (request_token: string): AxiosPromise => {
+  return Axios.post(`/authentication/session/new?api_key=${apiKey}`, {
+    request_token,
+  })
+}
+
+export const getFavoriteMoviesApi = (sessionId: string): AxiosPromise => {
+  return Axios.get(
+    `/account/{account_id}/favorite/movies?api_key=${apiKey}&session_id=${sessionId}`
+  )
+}
+
+export const changeFavoritesApi = (
+  movieId: string,
+  sessionId: string,
+  isFavorite: boolean
+): AxiosPromise => {
   return Axios.post(
-    `https://api.themoviedb.org/3/authentication/session/new?api_key=${apiKey}`,
-    { request_token }
+    `/account/{account_id}/favorite?api_key=${apiKey}&session_id=${sessionId}`,
+    {
+      media_type: 'movie',
+      media_id: movieId,
+      favorite: isFavorite,
+    }
   )
 }

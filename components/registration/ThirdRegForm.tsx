@@ -36,9 +36,7 @@ const RegSchema: BaseSchema = Yup.object({
   city: Yup.string().required('City is required'),
 })
 
-export default function ThirdRegForm({
-  maxSteps,
-}: NextRegFormsProps): React.ReactElement {
+const ThirdRegForm: React.FC<NextRegFormsProps> = ({ maxSteps }) => {
   const router = useRouter()
 
   const step = Number(router.query.step)
@@ -126,3 +124,5 @@ export default function ThirdRegForm({
     </form>
   )
 }
+
+export default ThirdRegForm

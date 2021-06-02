@@ -5,7 +5,7 @@ import { initialMoviesState } from './initData'
 
 const hydrate = createAction<MoviesState>(HYDRATE)
 
-const playingMovieSlice = createSlice({
+const popularMovieSlice = createSlice({
   name: 'popularMovies',
   initialState: initialMoviesState,
   reducers: {
@@ -23,12 +23,12 @@ const playingMovieSlice = createSlice({
     builder.addCase(hydrate, (state, action) => {
       return {
         ...state,
-        ...(action.payload as any)[playingMovieSlice.name],
+        ...(action.payload as any)[popularMovieSlice.name],
       }
     })
   },
 })
 
-export const { getPopularMovies, setPopularMovies } = playingMovieSlice.actions
+export const { getPopularMovies, setPopularMovies } = popularMovieSlice.actions
 
-export default playingMovieSlice.reducer
+export default popularMovieSlice.reducer

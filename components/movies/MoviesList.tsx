@@ -3,14 +3,14 @@ import Image from 'next/image'
 import NextLink from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { getGenresApi } from '../api/api'
-import { CustomCircularProgress } from '../common/CustomCircularProgress'
 import { Genre, Movie, MoviesListResponse } from '../../types/types'
 
 type MoviesListProps = {
   data: MoviesListResponse
+  reversed?: boolean
 }
 
-export const MoviesList = ({ data }: MoviesListProps): React.ReactElement => {
+export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
   const [genres, setGenres] = useState<Array<Genre>>([])
 
   useEffect(() => {
@@ -24,12 +24,16 @@ export const MoviesList = ({ data }: MoviesListProps): React.ReactElement => {
       .join(', ')
   }
 
-  if (!data.results.length) return <CustomCircularProgress />
-
   return (
-    <>
+    <Box
+      display={'flex'}
+      flexDirection={reversed ? 'column-reverse' : 'column'}
+    >
       {data.results.map((mov: Movie) => (
-        <Paper key={mov.id} style={{ margin: '10px auto', maxWidth: '1200px' }}>
+        <Paper
+          key={mov.id}
+          style={{ margin: '10px auto', maxWidth: '1200px', width: '100%' }}
+        >
           <Box
             display={'flex'}
             minHeight={'250px'}
@@ -92,6 +96,6 @@ export const MoviesList = ({ data }: MoviesListProps): React.ReactElement => {
           </Box>
         </Paper>
       ))}
-    </>
+    </Box>
   )
 }
