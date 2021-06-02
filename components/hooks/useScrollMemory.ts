@@ -17,7 +17,8 @@ export const useScrollMemory = (): void => {
       sessionStorage.setItem(router.asPath, String(window.scrollY))
     }
 
-    window.addEventListener('click', handler)
-    return () => window.removeEventListener('click', handler)
+    router.events.on('routeChangeStart', handler)
+
+    return () => router.events.off('routeChangeStart', handler)
   })
 }

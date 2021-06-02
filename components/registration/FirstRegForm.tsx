@@ -101,16 +101,14 @@ const FirstRegForm: React.FC<RegFormProps> = ({
   ))
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      style={{
-        display: 'flex',
-        height: '600px',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-      }}
-    >
-      <Box style={{ overflow: 'auto' }}>
+    <form onSubmit={formik.handleSubmit}>
+      <Box
+        overflow={'auto'}
+        display={'flex'}
+        height={'600px'}
+        flexDirection={'column'}
+        justifyContent={'space-between'}
+      >
         {renderInputs}
 
         <Container>

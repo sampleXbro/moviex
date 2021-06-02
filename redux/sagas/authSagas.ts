@@ -1,5 +1,5 @@
-import { put } from 'redux-saga/effects'
-import { authApi, createSessionApi } from '../../components/api/api'
+import { put, call } from 'redux-saga/effects'
+import { authApi, createSessionApi } from '../../api/api'
 import { authError, authResponse } from '../slices/authSlice'
 import { LoginData } from '../../types/types'
 import { SESSION_NAME } from '../../utils/constants'
@@ -12,10 +12,12 @@ type Action = {
 
 export function* loginSaga(action: Action) {
   try {
-    const { data: token }: AxiosResponse = yield authApi(action.payload)
+    const { data: token }: AxiosResponse = yield call(() =>
+      authApi(action.payload)
+    )
     const {
       data: { session_id: sessionId },
-    }: AxiosResponse = yield createSessionApi(token.request_token)
+    }: AxiosResponse = yield call(() => createSessionApi(token.request_token))
 
     localStorage.setItem(SESSION_NAME, JSON.stringify({ token, sessionId }))
 

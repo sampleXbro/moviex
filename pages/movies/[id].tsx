@@ -6,8 +6,8 @@ import {
   getFavoriteMoviesApi,
   getMovieApi,
   getMovieVideosApi,
-} from '../../components/api/api'
-import { Box, Divider, Paper, Typography } from '@material-ui/core'
+} from '../../api/api'
+import { Box, Paper, Typography } from '@material-ui/core'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
@@ -15,6 +15,7 @@ import ReactPlayer from 'react-player/youtube'
 import { withAuthCheck } from '../../components/HOCs/withAuthCheck'
 import { Star, StarBorder } from '@material-ui/icons'
 import { Movie } from '../../types/types'
+import { CustomDivider } from '../../components/common/CustomDivider'
 
 function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()
@@ -55,82 +56,73 @@ function MoviePage(): JSX.Element {
   }
 
   return (
-    <Paper style={{ margin: '10px auto', maxWidth: '1200px' }}>
-      <Box
-        display={'flex'}
-        flexWrap={'wrap'}
-        padding={'10px'}
-        justifyContent={'center'}
-      >
-        <Image
-          src={'https://image.tmdb.org/t/p/w300' + data.poster_path}
-          width={300}
-          height={450}
-          layout={'intrinsic'}
-        />
-        <Box
-          display={'flex'}
-          flexDirection={'column'}
-          flex={1}
-          padding={'0 10px'}
-        >
+    <Box
+      display={'flex'}
+      flexWrap={'wrap'}
+      justifyContent={'center'}
+      margin={'10px auto'}
+      maxWidth={'1200px'}
+    >
+      <Paper>
+        <Box display={'flex'} padding={'10px'}>
+          <Image
+            src={'https://image.tmdb.org/t/p/w300' + data.poster_path}
+            width={300}
+            height={450}
+            layout={'intrinsic'}
+          />
           <Box
             display={'flex'}
-            justifyContent={'space-between'}
-            alignItems={'flex-end'}
+            flexDirection={'column'}
+            flex={1}
+            padding={'0 10px'}
           >
             <Box
               display={'flex'}
               justifyContent={'space-between'}
-              width={'100%'}
-              alignItems={'center'}
+              alignItems={'flex-end'}
             >
-              <Typography variant={'h4'}>{data.title}</Typography>
-              {isFavorite ? (
-                <Star
-                  color={'primary'}
-                  fontSize={'large'}
-                  cursor={'pointer'}
-                  onClick={handleFavoriteClick}
-                />
-              ) : (
-                <StarBorder
-                  fontSize={'large'}
-                  cursor={'pointer'}
-                  onClick={handleFavoriteClick}
-                />
-              )}
+              <Box
+                display={'flex'}
+                justifyContent={'space-between'}
+                width={'100%'}
+                alignItems={'center'}
+              >
+                <Typography variant={'h4'}>{data.title}</Typography>
+                {isFavorite ? (
+                  <Star
+                    color={'primary'}
+                    fontSize={'large'}
+                    cursor={'pointer'}
+                    onClick={handleFavoriteClick}
+                  />
+                ) : (
+                  <StarBorder
+                    fontSize={'large'}
+                    cursor={'pointer'}
+                    onClick={handleFavoriteClick}
+                  />
+                )}
+              </Box>
             </Box>
-          </Box>
-          <Divider
-            color={'black'}
-            flexItem
-            style={{ height: '1px', margin: '10px 0' }}
-          />
-          <Typography variant={'h6'} style={{ marginBottom: '10px' }}>
-            {data.budget
-              ? `Budget: ${data.budget} USD`
-              : 'Budget not specified'}
-          </Typography>
+            <CustomDivider />
+            <Typography variant={'h6'}>
+              {data.budget
+                ? `Budget: ${data.budget} USD`
+                : 'Budget not specified'}
+            </Typography>
 
-          <Typography variant={'body1'} style={{ marginBottom: '10px' }}>
-            {data.overview}
-          </Typography>
-          <Typography variant={'subtitle2'}>Genre: {genres}</Typography>
+            <Typography variant={'body1'}>{data.overview}</Typography>
+            <Typography variant={'subtitle2'}>Genre: {genres}</Typography>
+          </Box>
         </Box>
-      </Box>
-      <Divider
-        color={'black'}
-        flexItem
-        style={{ height: '1px', margin: '10px' }}
-      />
-      <Box display={'flex'} alignItems={'center'} flexDirection={'column'}>
-        <Typography variant={'h6'} style={{ margin: '10px' }}>
-          Official videos:
-        </Typography>
-        {renderVideos()}
-      </Box>
-    </Paper>
+        <CustomDivider />
+        <Box display={'flex'} alignItems={'center'} flexDirection={'column'}>
+          <Typography variant={'h6'}>Official videos:</Typography>
+          {renderVideos()}
+        </Box>
+      </Paper>
+    </Box>
   )
 }
 
