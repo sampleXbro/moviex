@@ -9,7 +9,10 @@ FROM node:14-alpine AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
+
 ENV GENERATE_SOURCEMAP false
+ENV NEXT_PUBLIC_API_KEY 2366ee9ce70473237b3ce1288bb02943
+
 RUN yarn build
 
 
@@ -17,6 +20,7 @@ FROM node:14-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
+
 
 
 RUN addgroup -g 1001 -S nodejs
@@ -29,7 +33,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
-ENV NEXT_PUBLIC_API_KEY=2366ee9ce70473237b3ce1288bb02943
+
 
 USER nextjs
 
