@@ -4,7 +4,7 @@ import {
   combineReducers,
   Store,
 } from '@reduxjs/toolkit'
-import createSagaMiddleware, { Task } from 'redux-saga'
+import createSagaMiddleware from 'redux-saga'
 import { rootSaga } from './rootSaga'
 import { reducer as playingMovies } from '../features/nowPlayingPage'
 import { reducer as popularMovies } from '../features/popularPage'
@@ -13,16 +13,12 @@ import { reducer as auth } from '../features/authPage'
 import { reducer as favoriteMovies } from '../features/favoriteMoviesPage'
 import { createWrapper } from 'next-redux-wrapper'
 
-export interface SagaStore extends Store {
-  sagaTask?: Task
-}
-
 const reducer = combineReducers({
   playingMovies,
   popularMovies,
   singleMovie,
-  auth,
   favoriteMovies,
+  auth,
 })
 
 export const makeStore = (): Store => {
@@ -33,7 +29,7 @@ export const makeStore = (): Store => {
     middleware: [...getDefaultMiddleware({ thunk: false }), sagaMiddleware],
   })
 
-  ;(store as SagaStore).sagaTask = sagaMiddleware.run(rootSaga)
+  sagaMiddleware.run(rootSaga)
 
   return store
 }

@@ -1,36 +1,41 @@
 import { wrapper } from '../../app/store'
 import { setMovie } from '../../features/singleMoviePage'
-import { useAuth, useMovie } from '../../common/selectors/selectors'
 import {
-  changeFavoritesApi,
-  getFavoriteMoviesApi,
-  getMovieApi,
-  getMovieVideosApi,
-} from '../../common/api/api'
+  useAuth,
+  useFavoriteMovies,
+  useMovie,
+} from '../../common/selectors/selectors'
+import { getMovieApi, getMovieVideosApi } from '../../common/api/api'
 import { Box, Paper, Typography } from '@material-ui/core'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import axios, { AxiosResponse } from 'axios'
 import ReactPlayer from 'react-player/youtube'
 import { withAuthCheck } from '../../common/components/HOCs/withAuthCheck'
 import { Star, StarBorder } from '@material-ui/icons'
 import { Movie } from '../../common/types/types'
 import { CustomDivider } from '../../common/components/common/CustomDivider'
+import {
+  changeFavorites,
+  getFavoriteMovies,
+} from '../../features/favoriteMoviesPage'
+import { useDispatch } from 'react-redux'
 
 function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()
   const authData = useAuth()
-  const [isFavorite, setIsFavorite] = useState(false)
+  const favorites = useFavoriteMovies()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    getFavoriteMoviesApi(authData.sessionId).then((res) => {
-      if (res.data.results.some((fav: Movie) => fav.id === data.id)) {
-        setIsFavorite(true)
-      }
-    })
-  }, [authData.sessionId, data.id])
+    dispatch(getFavoriteMovies(authData.sessionId))
+  }, [authData.sessionId, dispatch])
 
   const genres: string = data.genres.map((g) => g.name).join(', ')
+
+  const isFavorite = favorites.data.results.some(
+    (fav: Movie) => fav.id === data.id
+  )
 
   const renderVideos = (): JSX.Element[] => {
     return videos.map((vid) => (
@@ -48,11 +53,12 @@ function MoviePage(): JSX.Element {
   }
 
   const handleFavoriteClick = (): void => {
-    changeFavoritesApi(String(data.id), authData.sessionId, !isFavorite).then(
-      () => {
-        setIsFavorite(!isFavorite)
-      }
-    )
+    const payload = {
+      movieId: String(data.id),
+      sessionId: authData.sessionId,
+      isFavorite: !isFavorite,
+    }
+    dispatch(changeFavorites(payload))
   }
 
   return (

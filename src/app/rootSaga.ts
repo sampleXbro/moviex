@@ -1,14 +1,17 @@
 import { Effect, takeLatest } from 'redux-saga/effects'
-import { getFavoriteMoviesSaga } from '../features/favoriteMoviesPage'
-import { getPlayingMovies } from '../features/nowPlayingPage'
-import { getPopularMovies } from '../features/popularPage'
-import { getMovie } from '../features/singleMoviePage'
-import { authRequest } from '../features/authPage'
-import { loginSaga } from '../features/authPage'
-import { getFavoriteMovies } from '../features/favoriteMoviesPage'
-import { getPlayingMoviesSaga } from '../features/nowPlayingPage'
-import { getPopularMoviesSaga } from '../features/popularPage'
-import { getMovieSaga } from '../features/singleMoviePage'
+import { loginSaga, authRequest } from '../features/authPage'
+import {
+  getPlayingMoviesSaga,
+  getPlayingMovies,
+} from '../features/nowPlayingPage'
+import { getPopularMoviesSaga, getPopularMovies } from '../features/popularPage'
+import { getMovieSaga, getMovie } from '../features/singleMoviePage'
+import {
+  changeFavoritesSaga,
+  getFavoriteMoviesSaga,
+  getFavoriteMovies,
+  changeFavorites,
+} from '../features/favoriteMoviesPage'
 
 export function* rootSaga(): Generator<Effect> {
   yield takeLatest(getPlayingMovies.type, getPlayingMoviesSaga)
@@ -16,4 +19,5 @@ export function* rootSaga(): Generator<Effect> {
   yield takeLatest(getMovie.type, getMovieSaga)
   yield takeLatest(authRequest.type, loginSaga)
   yield takeLatest(getFavoriteMovies.type, getFavoriteMoviesSaga)
+  yield takeLatest(changeFavorites.type, changeFavoritesSaga)
 }

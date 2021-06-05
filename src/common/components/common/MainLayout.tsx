@@ -248,7 +248,9 @@ const MainLayout: React.FC = ({ children }) => {
       ) : (
         <div>
           <MenuItem onClick={() => router.push('/sign-in')}>Login</MenuItem>
-          <MenuItem onClick={() => router.push('/register')}>Register</MenuItem>
+          <MenuItem onClick={() => router.push('/register/1')}>
+            Register
+          </MenuItem>
         </div>
       )}
     </Menu>
