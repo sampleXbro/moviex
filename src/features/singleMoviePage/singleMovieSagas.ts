@@ -6,6 +6,7 @@ import { Action } from '../../common/types/types'
 export function* getMovieSaga(action: Action) {
   try {
     const { data } = yield call(() => getMovieApi(action.payload))
+
     yield put(setMovie(data))
   } catch (e) {
     console.log(e)

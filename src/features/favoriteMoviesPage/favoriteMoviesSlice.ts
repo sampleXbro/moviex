@@ -15,12 +15,14 @@ const favoriteMoviesSlice = createSlice({
       state.isLoading = false
     },
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    changeFavorites() {},
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    changeFavorites(state, action) {
+      state.isLoading = true
+    },
   },
 })
 
-export const { getFavoriteMovies, setFavoriteMovies } =
+export const { getFavoriteMovies, setFavoriteMovies, changeFavorites } =
   favoriteMoviesSlice.actions
 
 export default favoriteMoviesSlice.reducer

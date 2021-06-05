@@ -3,7 +3,6 @@ import Head from 'next/head'
 import { Typography } from '@material-ui/core'
 import { MoviesList } from '../common/components/common/MoviesList'
 import React, { useEffect } from 'react'
-
 import { CustomCircularProgress } from '../common/components/common/CustomCircularProgress'
 import { useDispatch } from 'react-redux'
 import { getFavoriteMovies } from '../features/favoriteMoviesPage'
