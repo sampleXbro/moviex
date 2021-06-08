@@ -19,8 +19,8 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-RUN addgroup -g 1001 -S moviex
-RUN adduser -S moviex -u 1001
+RUN addgroup -g 1001 -S nextjs
+RUN adduser -S nextjs -u 1001
 
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
@@ -28,7 +28,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
-USER moviex
+USER nextjs
 
 EXPOSE 3000
 
