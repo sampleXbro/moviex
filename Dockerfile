@@ -10,7 +10,6 @@ COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 
 ENV GENERATE_SOURCEMAP false
-ENV NEXT_PUBLIC_API_KEY 2366ee9ce70473237b3ce1288bb02943
 
 RUN yarn build
 
