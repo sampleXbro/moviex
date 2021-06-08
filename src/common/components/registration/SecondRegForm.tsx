@@ -90,7 +90,7 @@ const SecondRegForm: React.FC<NextRegFormsProps> = ({ maxSteps }) => {
         display={'flex'}
         height={'600px'}
         flexDirection={'column'}
-        justifyContent={'space-between'}
+        justifyContent={'flex-start'}
       >
         {renderInputs}
       </Box>
