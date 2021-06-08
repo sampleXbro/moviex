@@ -1,6 +1,3 @@
-variables:
-  NEXT_PUBLIC_API_KEY: "$NEXT_PUBLIC_API_KEY"
-
 docker-build:
   # Use the official docker image.
   image: docker:latest
@@ -11,6 +8,8 @@ docker-build:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)  
+  variables:
+    NEXT_PUBLIC_API_KEY: "2366ee9ce70473237b3ce1288bb02943"
   script:
     - |
       if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
