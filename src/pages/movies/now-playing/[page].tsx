@@ -1,7 +1,9 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { usePlayingMovies } from '../../../common/selectors/selectors'
-import { setPlayingMovies } from '../../../features/nowPlayingPage'
+import {
+  setPlayingMovies,
+  usePlayingMovies,
+} from '../../../features/nowPlayingPage'
 import Head from 'next/head'
 import { Box, Typography } from '@material-ui/core'
 import { MoviesList } from '../../../common/components/common/MoviesList'

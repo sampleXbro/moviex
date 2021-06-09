@@ -15,8 +15,7 @@ import { createRequestTokenApi } from '../common/api/api'
 import { useRouter } from 'next/router'
 import { Token } from '../common/types/types'
 import { useDispatch } from 'react-redux'
-import { authRequest } from '../features/authPage'
-import { useAuth } from '../common/selectors/selectors'
+import { authRequest, useAuth } from '../features/authPage'
 import { useToken } from '../common/components/hooks/useToken'
 
 const SignInSchema: BaseSchema = Yup.object({

@@ -2,6 +2,7 @@ import {
   getFavoriteMoviesSaga,
   changeFavoritesSaga,
 } from './favoritesMoviesSagas'
+import { useFavoriteMovies } from './selectors'
 import reducer, {
   getFavoriteMovies,
   setFavoriteMovies,
@@ -15,4 +16,5 @@ export {
   getFavoriteMovies,
   setFavoriteMovies,
   changeFavorites,
+  useFavoriteMovies,
 }

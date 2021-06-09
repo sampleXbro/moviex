@@ -1,10 +1,5 @@
 import { wrapper } from '../../app/store'
-import { setMovie } from '../../features/singleMoviePage'
-import {
-  useAuth,
-  useFavoriteMovies,
-  useMovie,
-} from '../../common/selectors/selectors'
+import { setMovie, useMovie } from '../../features/singleMoviePage'
 import { getMovieApi, getMovieVideosApi } from '../../common/api/api'
 import { Box, Paper, Typography } from '@material-ui/core'
 import Image from 'next/image'
@@ -18,8 +13,10 @@ import { CustomDivider } from '../../common/components/common/CustomDivider'
 import {
   changeFavorites,
   getFavoriteMovies,
+  useFavoriteMovies,
 } from '../../features/favoriteMoviesPage'
 import { useDispatch } from 'react-redux'
+import { useAuth } from '../../features/authPage'
 
 function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()

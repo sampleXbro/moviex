@@ -5,8 +5,11 @@ import { MoviesList } from '../common/components/common/MoviesList'
 import React, { useEffect } from 'react'
 import { CustomCircularProgress } from '../common/components/common/CustomCircularProgress'
 import { useDispatch } from 'react-redux'
-import { getFavoriteMovies } from '../features/favoriteMoviesPage'
-import { useAuth, useFavoriteMovies } from '../common/selectors/selectors'
+import {
+  getFavoriteMovies,
+  useFavoriteMovies,
+} from '../features/favoriteMoviesPage'
+import { useAuth } from '../features/authPage'
 
 const Favorite = (): JSX.Element => {
   const { data, isLoading } = useFavoriteMovies()

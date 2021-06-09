@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import { useAuth } from '../../selectors/selectors'
+import { useAuth } from '../../../features/authPage'
 dayjs.extend(utc)
 
 export const useToken = () => {

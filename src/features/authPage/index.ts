@@ -1,4 +1,5 @@
 import { loginSaga } from './authSagas'
+import { useAuth } from './selectors'
 import reducer, {
   authRequest,
   authResponse,
@@ -6,4 +7,12 @@ import reducer, {
   authClear,
 } from './authSlice'
 
-export { reducer, loginSaga, authRequest, authResponse, authError, authClear }
+export {
+  reducer,
+  loginSaga,
+  authRequest,
+  authResponse,
+  authError,
+  authClear,
+  useAuth,
+}
