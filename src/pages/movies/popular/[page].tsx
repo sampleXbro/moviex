@@ -1,6 +1,5 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { usePopularMovies } from '../../../common/selectors/selectors'
 import Head from 'next/head'
 import { Box, Typography } from '@material-ui/core'
 import { MoviesList } from '../../../common/components/common/MoviesList'
@@ -8,7 +7,10 @@ import { wrapper } from '../../../app/store'
 import { AxiosResponse } from 'axios'
 import { getPopularMoviesApi } from '../../../common/api/api'
 import { Pagination } from '@material-ui/lab'
-import { setPopularMovies } from '../../../features/popularPage'
+import {
+  setPopularMovies,
+  usePopularMovies,
+} from '../../../features/popularPage'
 import { useScrollMemory } from '../../../common/components/hooks/useScrollMemory'
 import { withAuthCheck } from '../../../common/components/HOCs/withAuthCheck'
 import { GetStaticPathsResult } from 'next'
