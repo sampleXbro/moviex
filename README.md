@@ -1,4 +1,4 @@
-#Moviex - cinema theater on NextJS
+#Moviex - TOP rated films app
 First, run the development server:
 
 npm run dev
