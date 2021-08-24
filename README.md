@@ -1,5 +1,5 @@
 #Moviex - TOP rated films app
-First, run the development server:
+#First, run the development server:
 
 npm run dev
 #or
