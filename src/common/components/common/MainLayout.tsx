@@ -33,6 +33,7 @@ import { getIcon, routes } from '../../utils/constants'
 import { useToken } from '../hooks/useToken'
 import { useDispatch } from 'react-redux'
 import { authClear } from '../../../features/authPage'
+import { withAuthCheck } from '../HOCs/withAuthCheck'
 
 const drawerWidth = 240
 
@@ -178,7 +179,7 @@ const MainLayout: React.FC = ({ children }) => {
 
   useEffect(() => {
     const handleClickListener = (e: any): void => {
-      if (e.target.id === 'searchList' || e.target.id === 'searchInput') {
+      if (e.target?.id === 'searchList' || e.target?.id === 'searchInput') {
         setIsLiveSearchVisible(true)
       } else {
         setIsLiveSearchVisible(false)
@@ -405,4 +406,4 @@ const MainLayout: React.FC = ({ children }) => {
   )
 }
 
-export default MainLayout
+export default withAuthCheck(MainLayout)

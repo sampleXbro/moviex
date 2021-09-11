@@ -78,9 +78,9 @@ export default function SignIn(): JSX.Element {
       <Box maxWidth={'450px'} margin={'0 auto'}>
         <form onSubmit={formik.handleSubmit}>
           <Paper elevation={3}>
-            <Box padding={'15px'} marginTop={'20px'}>
+            <Box padding={'15px'} marginTop={'50%'}>
               <Typography variant={'h5'} align={'center'}>
-                Login
+                Login to Moviex
               </Typography>
               <FormHelperText error>{error}</FormHelperText>
               <FormikTextField
