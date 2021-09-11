@@ -7,12 +7,14 @@ import { AppProps } from 'next/app'
 
 import MainLayout from '../common/components/common/MainLayout'
 
-const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => (
-  <MuiThemeProvider theme={theme}>
-    <MainLayout>
-      <Component {...pageProps} />
-    </MainLayout>
-  </MuiThemeProvider>
-)
+const App = ({ Component, pageProps }: AppProps): JSX.Element => {
+  return (
+    <MuiThemeProvider theme={theme}>
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
+    </MuiThemeProvider>
+  )
+}
 
-export default wrapper.withRedux(MyApp)
+export default wrapper.withRedux(App)

@@ -12,7 +12,6 @@ import { AxiosResponse } from 'axios'
 import { getNowPlayingMoviesApi } from '../../../common/api/api'
 import { Pagination } from '@material-ui/lab'
 import { useScrollMemory } from '../../../common/components/hooks/useScrollMemory'
-import { withAuthCheck } from '../../../common/components/HOCs/withAuthCheck'
 import { GetStaticPathsResult } from 'next'
 import { Paths } from '../../../common/types/types'
 
@@ -56,7 +55,7 @@ function NowPlaying(): JSX.Element {
   )
 }
 
-export default withAuthCheck(NowPlaying)
+export default NowPlaying
 
 export const getStaticProps = wrapper.getStaticProps(
   async ({ store, params }) => {

@@ -6,7 +6,6 @@ import Image from 'next/image'
 import React, { useEffect } from 'react'
 import axios, { AxiosResponse } from 'axios'
 import ReactPlayer from 'react-player/youtube'
-import { withAuthCheck } from '../../common/components/HOCs/withAuthCheck'
 import { Star, StarBorder } from '@material-ui/icons'
 import { Movie } from '../../common/types/types'
 import { CustomDivider } from '../../common/components/common/CustomDivider'
@@ -129,7 +128,7 @@ function MoviePage(): JSX.Element {
   )
 }
 
-export default withAuthCheck(MoviePage)
+export default MoviePage
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async ({ store, params }) => {

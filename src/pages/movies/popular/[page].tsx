@@ -12,7 +12,6 @@ import {
   usePopularMovies,
 } from '../../../features/popularPage'
 import { useScrollMemory } from '../../../common/components/hooks/useScrollMemory'
-import { withAuthCheck } from '../../../common/components/HOCs/withAuthCheck'
 import { GetStaticPathsResult } from 'next'
 import { Paths } from '../../../common/types/types'
 
@@ -56,7 +55,7 @@ function Popular(): React.ReactElement {
   )
 }
 
-export default withAuthCheck(Popular)
+export default Popular
 
 export const getStaticProps = wrapper.getStaticProps(
   async ({ store, params }) => {
