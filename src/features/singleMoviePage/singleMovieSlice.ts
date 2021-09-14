@@ -42,6 +42,8 @@ const singleMovieSlice = createSlice({
   reducers: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     getMovie(state, action) {
+      state.data = initialMovieData
+      state.videos = []
       state.isLoading = true
     },
 
