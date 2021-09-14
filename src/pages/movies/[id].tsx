@@ -1,10 +1,7 @@
-import { wrapper } from '../../app/store'
-import { setMovie, useMovie } from '../../features/singleMoviePage'
-import { getMovieApi, getMovieVideosApi } from '../../common/api/api'
+import { getMovie, useMovie } from '../../features/singleMoviePage'
 import { Box, Paper, Typography } from '@material-ui/core'
 import Image from 'next/image'
 import React, { useEffect } from 'react'
-import axios, { AxiosResponse } from 'axios'
 import ReactPlayer from 'react-player/youtube'
 import { Star, StarBorder } from '@material-ui/icons'
 import { Movie } from '../../common/types/types'
@@ -16,25 +13,28 @@ import {
 } from '../../features/favoriteMoviesPage'
 import { useDispatch } from 'react-redux'
 import { useAuth } from '../../features/authPage'
+import { useRouter } from 'next/router'
 
 function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()
   const authData = useAuth()
   const favorites = useFavoriteMovies()
   const dispatch = useDispatch()
+  const { query } = useRouter()
 
   useEffect(() => {
+    dispatch(getMovie(query.id))
     dispatch(getFavoriteMovies(authData.sessionId))
-  }, [authData.sessionId, dispatch])
+  }, [authData.sessionId, query.id, dispatch])
 
-  const genres: string = data.genres.map((g) => g.name).join(', ')
+  const genres: string = data?.genres.map((g) => g.name).join(', ')
 
   const isFavorite = favorites.data.results.some(
     (fav: Movie) => fav.id === data.id
   )
 
   const renderVideos = (): JSX.Element[] => {
-    return videos.map((vid) => (
+    return videos?.map((vid) => (
       <Box
         display={'flex'}
         flexDirection={'column'}
@@ -68,7 +68,7 @@ function MoviePage(): JSX.Element {
       <Paper>
         <Box display={'flex'} padding={'10px'}>
           <Image
-            src={'https://image.tmdb.org/t/p/w300' + data.poster_path}
+            src={'https://image.tmdb.org/t/p/w300' + data?.poster_path}
             width={300}
             height={450}
             layout={'intrinsic'}
@@ -90,7 +90,7 @@ function MoviePage(): JSX.Element {
                 width={'100%'}
                 alignItems={'center'}
               >
-                <Typography variant={'h4'}>{data.title}</Typography>
+                <Typography variant={'h4'}>{data?.title}</Typography>
                 {isFavorite ? (
                   <Star
                     color={'primary'}
@@ -109,12 +109,12 @@ function MoviePage(): JSX.Element {
             </Box>
             <CustomDivider />
             <Typography variant={'h6'}>
-              {data.budget
+              {data?.budget
                 ? `Budget: ${data.budget} USD`
                 : 'Budget not specified'}
             </Typography>
 
-            <Typography variant={'body1'}>{data.overview}</Typography>
+            <Typography variant={'body1'}>{data?.overview}</Typography>
             <Typography variant={'subtitle2'}>Genre: {genres}</Typography>
           </Box>
         </Box>
@@ -129,14 +129,3 @@ function MoviePage(): JSX.Element {
 }
 
 export default MoviePage
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({ store, params }) => {
-    const res: Array<AxiosResponse> = await axios.all([
-      getMovieApi(Number(params?.id)),
-      getMovieVideosApi(Number(params?.id)),
-    ])
-
-    store.dispatch(setMovie({ data: res[0].data, videos: res[1].data.results }))
-  }
-)
