@@ -1,5 +1,5 @@
 import { getMovie, useMovie } from '../../features/singleMoviePage'
-import { Box, Paper, Typography } from '@material-ui/core'
+import { Box, Paper, Typography, useMediaQuery } from '@material-ui/core'
 import Image from 'next/image'
 import React, { useEffect } from 'react'
 import ReactPlayer from 'react-player/youtube'
@@ -15,9 +15,12 @@ import { useDispatch } from 'react-redux'
 import { useAuth } from '../../features/authPage'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { useTheme } from '@material-ui/core/styles'
 
 function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()
+  const theme = useTheme()
+  const isSm = useMediaQuery(theme.breakpoints.down('sm'))
   const authData = useAuth()
   const favorites = useFavoriteMovies()
   const dispatch = useDispatch()
@@ -35,18 +38,35 @@ function MoviePage(): JSX.Element {
   )
 
   const renderVideos = (): JSX.Element[] => {
-    return videos?.map((vid) => (
-      <Box
-        display={'flex'}
-        flexDirection={'column'}
-        alignItems={'center'}
-        margin={'10px'}
-        key={vid.id}
-      >
-        <Typography>{vid.name}</Typography>
-        <ReactPlayer url={`https://www.youtube.com/watch?v=${vid.key}`} />
-      </Box>
-    ))
+    return videos
+      ?.map((vid) => (
+        <>
+          <Typography align={'center'} variant={'subtitle2'}>
+            {vid.name}
+          </Typography>
+          <Box
+            display={'flex'}
+            flexDirection={'column'}
+            alignItems={'center'}
+            textAlign={'center'}
+            margin={'10px'}
+            position={'relative'}
+            width={'100%'}
+            paddingTop={'56.25%'}
+            key={vid.id}
+          >
+            <ReactPlayer
+              style={{ position: 'absolute', top: 0, left: 0, padding: '10px' }}
+              width={'100%'}
+              height={'100%'}
+              controls={true}
+              light={true}
+              url={`https://www.youtube.com/watch?v=${vid.key}`}
+            />
+          </Box>
+        </>
+      ))
+      .reverse()
   }
 
   const handleFavoriteClick = (): void => {
@@ -71,23 +91,32 @@ function MoviePage(): JSX.Element {
         maxWidth={'1200px'}
       >
         <Paper>
-          <Box display={'flex'} padding={'10px'}>
-            <Image
-              src={'https://image.tmdb.org/t/p/w300' + data?.poster_path}
-              width={300}
-              height={450}
-              layout={'intrinsic'}
-            />
+          <Box
+            display={'flex'}
+            padding={'10px'}
+            flexDirection={isSm && 'column'}
+            alignItems={isSm && 'center'}
+          >
+            <Box width={'100%'} maxWidth={'300px'}>
+              <Image
+                src={'https://image.tmdb.org/t/p/w300' + data?.poster_path}
+                width={300}
+                height={450}
+                layout={'responsive'}
+              />
+            </Box>
             <Box
               display={'flex'}
               flexDirection={'column'}
               flex={1}
               padding={'0 10px'}
+              alignItems={isSm && 'center'}
+              textAlign={isSm && 'center'}
             >
               <Box
+                width={'100%'}
                 display={'flex'}
                 justifyContent={'space-between'}
-                alignItems={'flex-end'}
               >
                 <Box
                   display={'flex'}
@@ -120,6 +149,7 @@ function MoviePage(): JSX.Element {
               </Typography>
 
               <Typography variant={'body1'}>{data?.overview}</Typography>
+              <hr />
               <Typography variant={'subtitle2'}>Genre: {genres}</Typography>
             </Box>
           </Box>

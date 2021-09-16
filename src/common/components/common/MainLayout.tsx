@@ -34,8 +34,9 @@ import { useToken } from '../hooks/useToken'
 import { useDispatch } from 'react-redux'
 import { authClear } from '../../../features/authPage'
 import { withAuthCheck } from '../HOCs/withAuthCheck'
+import { useMediaQuery } from '@material-ui/core'
 
-const drawerWidth = 240
+const drawerWidth = 220
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -67,7 +68,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
     },
     menuButton: {
-      marginRight: 36,
+      marginRight: 10,
     },
     search: {
       position: 'relative',
@@ -125,6 +126,9 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
       flexShrink: 0,
       whiteSpace: 'nowrap',
+      [theme.breakpoints.down('xs')]: {
+        position: 'absolute',
+      },
     },
     drawerOpen: {
       width: drawerWidth,
@@ -139,7 +143,7 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
       }),
       overflowX: 'hidden',
-      width: theme.spacing(7) + 1,
+      width: 0,
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(9) + 1,
       },
@@ -161,6 +165,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const MainLayout: React.FC = ({ children }) => {
   const classes = useStyles()
   const theme = useTheme()
+  const isSm = useMediaQuery(theme.breakpoints.down('xs'))
   const router = useRouter()
   const { isValidToken } = useToken()
   const dispatch = useDispatch()
@@ -304,9 +309,11 @@ const MainLayout: React.FC = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant='h6' noWrap>
-            MOVIEX
-          </Typography>
+          {!isSm && (
+            <Typography variant='h6' noWrap>
+              MOVIEX
+            </Typography>
+          )}
           <div className={classes.search} style={{ width: '450px' }}>
             {isLiveSearchVisible && <LiveSearch searchStr={searchStr} />}
             <div className={classes.searchIcon}>
