@@ -14,6 +14,7 @@ import {
 import { useDispatch } from 'react-redux'
 import { useAuth } from '../../features/authPage'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()
@@ -58,73 +59,78 @@ function MoviePage(): JSX.Element {
   }
 
   return (
-    <Box
-      display={'flex'}
-      flexWrap={'wrap'}
-      justifyContent={'center'}
-      margin={'10px auto'}
-      maxWidth={'1200px'}
-    >
-      <Paper>
-        <Box display={'flex'} padding={'10px'}>
-          <Image
-            src={'https://image.tmdb.org/t/p/w300' + data?.poster_path}
-            width={300}
-            height={450}
-            layout={'intrinsic'}
-          />
-          <Box
-            display={'flex'}
-            flexDirection={'column'}
-            flex={1}
-            padding={'0 10px'}
-          >
+    <>
+      <Head>
+        <title>{`${data.title} | Moviex`}</title>
+      </Head>
+      <Box
+        display={'flex'}
+        flexWrap={'wrap'}
+        justifyContent={'center'}
+        margin={'10px auto'}
+        maxWidth={'1200px'}
+      >
+        <Paper>
+          <Box display={'flex'} padding={'10px'}>
+            <Image
+              src={'https://image.tmdb.org/t/p/w300' + data?.poster_path}
+              width={300}
+              height={450}
+              layout={'intrinsic'}
+            />
             <Box
               display={'flex'}
-              justifyContent={'space-between'}
-              alignItems={'flex-end'}
+              flexDirection={'column'}
+              flex={1}
+              padding={'0 10px'}
             >
               <Box
                 display={'flex'}
                 justifyContent={'space-between'}
-                width={'100%'}
-                alignItems={'center'}
+                alignItems={'flex-end'}
               >
-                <Typography variant={'h4'}>{data?.title}</Typography>
-                {isFavorite ? (
-                  <Star
-                    color={'primary'}
-                    fontSize={'large'}
-                    cursor={'pointer'}
-                    onClick={handleFavoriteClick}
-                  />
-                ) : (
-                  <StarBorder
-                    fontSize={'large'}
-                    cursor={'pointer'}
-                    onClick={handleFavoriteClick}
-                  />
-                )}
+                <Box
+                  display={'flex'}
+                  justifyContent={'space-between'}
+                  width={'100%'}
+                  alignItems={'center'}
+                >
+                  <Typography variant={'h4'}>{data?.title}</Typography>
+                  {isFavorite ? (
+                    <Star
+                      color={'primary'}
+                      fontSize={'large'}
+                      cursor={'pointer'}
+                      onClick={handleFavoriteClick}
+                    />
+                  ) : (
+                    <StarBorder
+                      fontSize={'large'}
+                      cursor={'pointer'}
+                      onClick={handleFavoriteClick}
+                    />
+                  )}
+                </Box>
               </Box>
-            </Box>
-            <CustomDivider />
-            <Typography variant={'h6'}>
-              {data?.budget
-                ? `Budget: ${data.budget} USD`
-                : 'Budget not specified'}
-            </Typography>
+              <CustomDivider />
+              <Typography variant={'h6'}>
+                {data?.budget
+                  ? `Budget: ${data.budget} USD`
+                  : 'Budget not specified'}
+              </Typography>
 
-            <Typography variant={'body1'}>{data?.overview}</Typography>
-            <Typography variant={'subtitle2'}>Genre: {genres}</Typography>
+              <Typography variant={'body1'}>{data?.overview}</Typography>
+              <Typography variant={'subtitle2'}>Genre: {genres}</Typography>
+            </Box>
           </Box>
-        </Box>
-        <CustomDivider />
-        <Box display={'flex'} alignItems={'center'} flexDirection={'column'}>
-          <Typography variant={'h6'}>Official videos:</Typography>
-          {renderVideos()}
-        </Box>
-      </Paper>
-    </Box>
+          <CustomDivider />
+          <Box display={'flex'} alignItems={'center'} flexDirection={'column'}>
+            <Typography variant={'h6'}>Official videos:</Typography>
+            {renderVideos()}
+          </Box>
+        </Paper>
+      </Box>
+    </>
   )
 }
 
