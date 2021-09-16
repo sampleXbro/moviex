@@ -20,16 +20,16 @@ import { useToken } from '../common/components/hooks/useToken'
 
 const SignInSchema: BaseSchema = Yup.object({
   username: Yup.string()
-    .min(2, 'Name is too short!')
-    .max(50, 'Name is too Long!')
-    .required('First name is required'),
+    .min(2, 'Имя пользователя слишком короткое!')
+    .max(50, 'Имя пользователя слишком длинное')
+    .required('Введите имя пользователя'),
   password: Yup.string()
-    .required('Password is required')
-    .min(8, 'Password is too short - it should be at least 8 chars length.')
-    .matches(
-      /[a-zA-Z1-9]/,
-      'Password can only contain latin letters and digits.'
-    ),
+    .required('Введите пароль')
+    .min(
+      8,
+      'Пароль слишком короткий. Он должен быть не менее 8 символов в длину.'
+    )
+    .matches(/[a-zA-Z1-9]/, 'Пароль может содержать только буквы и цифры'),
 })
 
 export default function SignIn(): JSX.Element {
@@ -80,21 +80,21 @@ export default function SignIn(): JSX.Element {
           <Paper elevation={3}>
             <Box padding={'15px'} marginTop={'50%'}>
               <Typography variant={'h5'} align={'center'}>
-                Login to Moviex
+                Войти в Moviex
               </Typography>
               <FormHelperText error>{error}</FormHelperText>
               <FormikTextField
                 fullWidth
                 formik={formik}
                 name={'username'}
-                label={'Login'}
+                label={'Логин'}
                 type={'text'}
               />
               <FormikTextField
                 fullWidth
                 formik={formik}
                 name={'password'}
-                label={'Password'}
+                label={'Пароль'}
                 type={'password'}
               />
 

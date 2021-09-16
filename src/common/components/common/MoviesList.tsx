@@ -74,7 +74,10 @@ export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
                     </Typography>
                   </NextLink>
                 </Link>
-
+                <Typography variant={'body2'}>
+                  {mov.genre_ids.length > 1 ? 'Жанры: ' : 'Жанр: '}
+                  {getGenreNamesByIds(mov.genre_ids)}
+                </Typography>
                 <CustomDivider />
                 <Box
                   display={'flex'}
@@ -84,15 +87,12 @@ export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
                   justifyContent={'space-between'}
                 >
                   <Typography variant={'body2'}>{mov.overview}</Typography>
-                  <Typography variant={'body2'}>
-                    {mov.genre_ids.length > 1 ? 'Genres: ' : 'Genre: '}
-                    {getGenreNamesByIds(mov.genre_ids)}
-                  </Typography>
+
                   <Box display={'flex'} flexDirection={'column'}>
                     <CustomDivider />
                     <Box alignSelf={'flex-end'}>
                       <Typography variant={'body2'}>
-                        Release date: {mov.release_date}
+                        Дата выхода: {mov.release_date}
                       </Typography>
                     </Box>
                   </Box>

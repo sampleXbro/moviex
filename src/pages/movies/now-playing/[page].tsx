@@ -35,11 +35,11 @@ function NowPlaying(): JSX.Element {
   return (
     <div>
       <Head>
-        <title>Moviex | Now playing</title>
+        <title>Moviex | Сейчас в прокате</title>
       </Head>
 
-      <Typography variant={'h4'} align={'center'}>
-        NOW PLAYING
+      <Typography variant={'h5'} align={'center'}>
+        СЕЙЧАС В ПРОКАТЕ
       </Typography>
       <MoviesList data={data} />
       <Box display={'flex'} justifyContent={'center'}>

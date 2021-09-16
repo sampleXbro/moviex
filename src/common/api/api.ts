@@ -10,31 +10,31 @@ const Axios = axios.create({
 
 export const getNowPlayingMoviesApi = (page = 1): AxiosPromise => {
   return Axios.get(
-    `/movie/now_playing?api_key=${apiKey}&language=en-US&page=${page}`
+    `/movie/now_playing?api_key=${apiKey}&language=ru-RU&page=${page}`
   )
 }
 
 export const getPopularMoviesApi = (page = 1): AxiosPromise => {
   return Axios.get(
-    `/movie/popular?api_key=${apiKey}&language=en-US&page=${page}`
+    `/movie/popular?api_key=${apiKey}&language=ru-RU&page=${page}`
   )
 }
 
 export const getGenresApi = (): AxiosPromise => {
-  return Axios.get(`/genre/movie/list?api_key=${apiKey}&language=en-US`)
+  return Axios.get(`/genre/movie/list?api_key=${apiKey}&language=ru-RU`)
 }
 
 export const getMovieApi = (id: number): AxiosPromise => {
-  return Axios.get(`movie/${id}?api_key=${apiKey}&language=en-US`)
+  return Axios.get(`movie/${id}?api_key=${apiKey}&language=ru-RU`)
 }
 
 export const getMovieVideosApi = (id: number): AxiosPromise => {
-  return Axios.get(`/movie/${id}/videos?api_key=${apiKey}&language=en-US`)
+  return Axios.get(`/movie/${id}/videos?api_key=${apiKey}`)
 }
 
 export const getSearchedMoviesApi = (str = '', page = 1): AxiosPromise => {
   return Axios.get(
-    `/search/movie?api_key=${apiKey}&language=en-US&query=${str}&page=${page}&include_adult=false`
+    `/search/movie?api_key=${apiKey}&language=ru-RU&query=${str}&page=${page}&include_adult=false`
   )
 }
 
@@ -57,7 +57,7 @@ export const createSessionApi = (request_token: string): AxiosPromise => {
 
 export const getFavoriteMoviesApi = (sessionId: string): AxiosPromise => {
   return Axios.get(
-    `/account/{account_id}/favorite/movies?api_key=${apiKey}&session_id=${sessionId}`
+    `/account/{account_id}/favorite/movies?api_key=${apiKey}&session_id=${sessionId}&language=ru-RU`
   )
 }
 

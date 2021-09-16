@@ -23,19 +23,17 @@ const Favorite = (): JSX.Element => {
   return (
     <>
       <Head>
-        <title>Moviex | Favorite</title>
+        <title>Moviex | Избранное</title>
       </Head>
 
-      <Typography variant={'h4'} align={'center'}>
-        YOUR FAVORITE MOVIES
+      <Typography variant={'h5'} align={'center'}>
+        ИЗБРАННОЕ
       </Typography>
       {isLoading ? (
         <CustomCircularProgress />
       ) : (
         !data.results.length && (
-          <Typography align={'center'}>
-            You have no favorite movies at the moment
-          </Typography>
+          <Typography align={'center'}>В избранном пока пусто...</Typography>
         )
       )}
       <MoviesList data={data} reversed />
