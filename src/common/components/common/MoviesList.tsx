@@ -1,10 +1,11 @@
-import { Box, Link, Paper, Typography } from '@material-ui/core'
+import { Box, Link, Paper, Typography, useMediaQuery } from '@material-ui/core'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { getGenresApi } from '../../api/api'
 import { Genre, Movie, MoviesListResponse } from '../../types/types'
 import { CustomDivider } from './CustomDivider'
+import { useTheme } from '@material-ui/core/styles'
 
 type MoviesListProps = {
   data: MoviesListResponse
@@ -13,6 +14,8 @@ type MoviesListProps = {
 
 export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
   const [genres, setGenres] = useState<Array<Genre>>([])
+  const theme = useTheme()
+  const isSm = useMediaQuery(theme.breakpoints.down('sm'))
 
   useEffect(() => {
     getGenresApi().then((res) => setGenres(res.data.genres))
@@ -43,23 +46,30 @@ export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
               minHeight={'250px'}
               padding={'10px'}
               justifyContent={'center'}
+              flexDirection={isSm && 'column'}
+              alignItems={isSm && 'center'}
+              textAlign={isSm && 'center'}
             >
-              <Image
-                src={'https://image.tmdb.org/t/p/w300' + mov.poster_path}
-                width={250}
-                height={350}
-                layout={'intrinsic'}
-              />
+              <Box maxWidth={250} width={'100%'}>
+                <NextLink href={`/movies/${mov.id}`}>
+                  <Image
+                    src={'https://image.tmdb.org/t/p/w300' + mov.poster_path}
+                    width={250}
+                    height={350}
+                    layout={'responsive'}
+                  />
+                </NextLink>
+              </Box>
               <Box
                 display={'flex'}
                 flexDirection={'column'}
-                alignItems={'flex-start'}
+                alignItems={isSm ? 'center' : 'flex-start'}
                 margin={'0 10px'}
                 width={'100%'}
               >
                 <Link style={{ cursor: 'pointer' }}>
                   <NextLink href={`/movies/${mov.id}`}>
-                    <Typography variant={'h5'}>
+                    <Typography variant={'h6'}>
                       {mov.title} / {mov.original_title}
                     </Typography>
                   </NextLink>
@@ -74,7 +84,7 @@ export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
                   justifyContent={'space-between'}
                 >
                   <Typography variant={'body2'}>{mov.overview}</Typography>
-                  <Typography variant={'body1'}>
+                  <Typography variant={'body2'}>
                     {mov.genre_ids.length > 1 ? 'Genres: ' : 'Genre: '}
                     {getGenreNamesByIds(mov.genre_ids)}
                   </Typography>
