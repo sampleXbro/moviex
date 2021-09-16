@@ -1,15 +1,12 @@
 import { expectSaga, testSaga } from 'redux-saga-test-plan'
-import { getMovieSaga, setMovie } from '../index'
+import { getMovie, getMovieSaga, setMovie } from '../index'
 import singleMovieReducer from '../singleMovieSlice'
 import { mockMovie, mockVideosArray } from '../../../__mocks__/mocks'
 import { getMovieApi, getMovieVideosApi } from '../../../common/api/api'
 import { call } from 'redux-saga-test-plan/matchers'
 
 test('should be correct order', () => {
-  const saga = testSaga(getMovieSaga, {
-    type: 'singleMovie/getMovie',
-    payload: '508943',
-  })
+  const saga = testSaga(getMovieSaga, getMovie('508943'))
 
   saga
     .next()
@@ -26,10 +23,7 @@ test('should be correct order', () => {
 })
 
 test('should have correct state after put', () => {
-  const saga = expectSaga(getMovieSaga, {
-    type: 'singleMovie/getMovie',
-    payload: '508943',
-  })
+  const saga = expectSaga(getMovieSaga, getMovie('508943'))
 
   return saga
     .withReducer(singleMovieReducer)
