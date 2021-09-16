@@ -145,7 +145,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowX: 'hidden',
       width: 0,
       [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9) + 1,
+        width: theme.spacing(8) + 1,
       },
     },
     toolbar: {
@@ -157,7 +157,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
+      padding: theme.spacing(1),
     },
   })
 )
@@ -237,6 +237,11 @@ const MainLayout: React.FC = ({ children }) => {
     setSearchStr(value)
   }
 
+  const handleMenuItemClick = (path: string): void => {
+    router.push(path)
+    handleDrawerClose()
+  }
+
   const menuId = 'primary-search-account-menu'
 
   const renderMenu = (
@@ -250,11 +255,13 @@ const MainLayout: React.FC = ({ children }) => {
       onClose={handleMenuClose}
     >
       {isValidToken ? (
-        <MenuItem onClick={handleLogoutClick}>Log out</MenuItem>
+        <MenuItem onClick={handleLogoutClick}>Выйти</MenuItem>
       ) : (
         <div>
-          <MenuItem onClick={() => router.push('/sign-in')}>Login</MenuItem>
-          <MenuItem onClick={() => router.push('/register/1')}>
+          <MenuItem onClick={() => handleMenuItemClick('/sign-in')}>
+            Login
+          </MenuItem>
+          <MenuItem onClick={() => handleMenuItemClick('/register/1')}>
             Register
           </MenuItem>
         </div>
@@ -283,7 +290,7 @@ const MainLayout: React.FC = ({ children }) => {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>Профиль</p>
       </MenuItem>
     </Menu>
   )
@@ -322,7 +329,7 @@ const MainLayout: React.FC = ({ children }) => {
             <InputBase
               value={searchStr}
               onChange={handleSearchInputChange}
-              placeholder='Search…'
+              placeholder='Поиск…'
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -360,6 +367,7 @@ const MainLayout: React.FC = ({ children }) => {
       {renderMobileMenu}
       {renderMenu}
       <Drawer
+        id={'drawer'}
         variant='permanent'
         className={clsx(classes.drawer, {
           [classes.drawerOpen]: open,
@@ -393,7 +401,7 @@ const MainLayout: React.FC = ({ children }) => {
                 }
                 button
                 key={path + index}
-                onClick={() => router.push(path)}
+                onClick={() => handleMenuItemClick(path)}
               >
                 <ListItemIcon>
                   <Icon />

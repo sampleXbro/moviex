@@ -35,15 +35,16 @@ function Popular(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>Moviex | Popular</title>
+        <title>Moviex | Популярное</title>
       </Head>
 
-      <Typography variant={'h4'} align={'center'}>
-        POPULAR MOVIES
+      <Typography variant={'h5'} align={'center'}>
+        ПОПУЛЯРНО СЕЙЧАС
       </Typography>
       <MoviesList data={data} />
       <Box display={'flex'} justifyContent={'center'}>
         <Pagination
+          size={'small'}
           page={page}
           onChange={handlePaginationChange}
           count={data.total_pages}

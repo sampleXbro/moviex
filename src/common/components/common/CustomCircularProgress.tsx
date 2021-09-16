@@ -1,21 +1,17 @@
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress, Box } from '@material-ui/core'
 import React from 'react'
 
 export const CustomCircularProgress: React.FC = () => {
   return (
-    <div
-      style={{
-        zIndex: 5,
-        position: 'absolute',
-        left: '-10px',
-        height: '100%',
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+    <Box
+      zIndex={5}
+      position={'absolute'}
+      display={'flex'}
+      width={'100%'}
+      justifyContent={'center'}
+      top={'50%'}
     >
       <CircularProgress />
-    </div>
+    </Box>
   )
 }

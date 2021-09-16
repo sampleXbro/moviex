@@ -16,6 +16,7 @@ import { useAuth } from '../../features/authPage'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { useTheme } from '@material-ui/core/styles'
+import { CustomCircularProgress } from '../../common/components/common/CustomCircularProgress'
 
 function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()
@@ -77,6 +78,8 @@ function MoviePage(): JSX.Element {
     }
     dispatch(changeFavorites(payload))
   }
+
+  if (!data.id) return <CustomCircularProgress />
 
   return (
     <>
@@ -142,20 +145,23 @@ function MoviePage(): JSX.Element {
                 </Box>
               </Box>
               <CustomDivider />
+              <hr />
+              <Typography variant={'subtitle2'}>Жанры: {genres}</Typography>
+              <hr />
+
               <Typography variant={'h6'}>
                 {data?.budget
-                  ? `Budget: ${data.budget} USD`
-                  : 'Budget not specified'}
+                  ? `Бюджет: ${data.budget} USD`
+                  : 'Бюджет не указан'}
               </Typography>
+              <hr />
 
               <Typography variant={'body1'}>{data?.overview}</Typography>
-              <hr />
-              <Typography variant={'subtitle2'}>Genre: {genres}</Typography>
             </Box>
           </Box>
           <CustomDivider />
           <Box display={'flex'} alignItems={'center'} flexDirection={'column'}>
-            <Typography variant={'h6'}>Official videos:</Typography>
+            <Typography variant={'h6'}>Официальные видео:</Typography>
             {renderVideos()}
           </Box>
         </Paper>
