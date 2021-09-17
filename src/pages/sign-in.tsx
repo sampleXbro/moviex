@@ -78,7 +78,7 @@ export default function SignIn(): JSX.Element {
       <Box maxWidth={'450px'} margin={'0 auto'}>
         <form onSubmit={formik.handleSubmit}>
           <Paper elevation={3}>
-            <Box padding={'15px'} marginTop={'50%'}>
+            <Box padding={'15px'} margin={'50% 10px 10px 10px'}>
               <Typography variant={'h5'} align={'center'}>
                 Войти в Moviex
               </Typography>
