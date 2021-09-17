@@ -33,7 +33,6 @@ import { getIcon, routes } from '../../utils/constants'
 import { useToken } from '../hooks/useToken'
 import { useDispatch } from 'react-redux'
 import { authClear } from '../../../features/authPage'
-import { withAuthCheck } from '../HOCs/withAuthCheck'
 import { useMediaQuery } from '@material-ui/core'
 
 const drawerWidth = 220
@@ -421,4 +420,4 @@ const MainLayout: React.FC = ({ children }) => {
   )
 }
 
-export default withAuthCheck(MainLayout)
+export default MainLayout

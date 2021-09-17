@@ -17,12 +17,14 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { useTheme } from '@material-ui/core/styles'
 import { CustomCircularProgress } from '../../common/components/common/CustomCircularProgress'
+import { useToken } from '../../common/components/hooks/useToken'
 
 function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()
   const theme = useTheme()
   const isSm = useMediaQuery(theme.breakpoints.down('sm'))
   const authData = useAuth()
+  const { isValidToken } = useToken()
   const favorites = useFavoriteMovies()
   const dispatch = useDispatch()
   const { query } = useRouter()
@@ -128,20 +130,22 @@ function MoviePage(): JSX.Element {
                   alignItems={'center'}
                 >
                   <Typography variant={'h4'}>{data?.title}</Typography>
-                  {isFavorite ? (
-                    <Star
-                      color={'primary'}
-                      fontSize={'large'}
-                      cursor={'pointer'}
-                      onClick={handleFavoriteClick}
-                    />
-                  ) : (
-                    <StarBorder
-                      fontSize={'large'}
-                      cursor={'pointer'}
-                      onClick={handleFavoriteClick}
-                    />
-                  )}
+                  {isValidToken ? (
+                    isFavorite ? (
+                      <Star
+                        color={'primary'}
+                        fontSize={'large'}
+                        cursor={'pointer'}
+                        onClick={handleFavoriteClick}
+                      />
+                    ) : (
+                      <StarBorder
+                        fontSize={'large'}
+                        cursor={'pointer'}
+                        onClick={handleFavoriteClick}
+                      />
+                    )
+                  ) : null}
                 </Box>
               </Box>
               <CustomDivider />
