@@ -95,7 +95,7 @@ function MoviePage(): JSX.Element {
         margin={'10px auto'}
         maxWidth={'1200px'}
       >
-        <Paper>
+        <Paper style={{ width: '100%' }}>
           <Box
             display={'flex'}
             padding={'10px'}
