@@ -43,7 +43,7 @@ function MoviePage(): JSX.Element {
   const renderVideos = (): JSX.Element[] => {
     return videos
       ?.map((vid) => (
-        <>
+        <React.Fragment key={vid.id}>
           <Typography align={'center'} variant={'subtitle2'}>
             {vid.name}
           </Typography>
@@ -67,7 +67,7 @@ function MoviePage(): JSX.Element {
               url={`https://www.youtube.com/watch?v=${vid.key}`}
             />
           </Box>
-        </>
+        </React.Fragment>
       ))
       .reverse()
   }

@@ -14,7 +14,6 @@ import { reducer as favoriteMovies } from '../features/favoriteMoviesPage'
 import { createWrapper } from 'next-redux-wrapper'
 import {
   persistStore,
-  persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -22,7 +21,6 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
 import { Persistor } from 'redux-persist/es/types'
 
 type PersistStore = {
@@ -37,18 +35,6 @@ const rootReducer = combineReducers({
   auth,
 })
 
-const persistConfig = {
-  key: 'root',
-  storage,
-  version: 1,
-  blacklist: [
-    'favoriteMovies',
-    'playingMovies',
-    'popularMovies',
-    'singleMovie',
-  ],
-}
-
 export const makeStore = (): PersistStore => {
   const sagaMiddleware = createSagaMiddleware()
 
@@ -57,6 +43,23 @@ export const makeStore = (): PersistStore => {
   const isClient = typeof window !== 'undefined'
 
   if (isClient) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { persistReducer } = require('redux-persist')
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const storage = require('redux-persist/lib/storage').default
+
+    const persistConfig = {
+      key: 'root',
+      storage,
+      version: 1,
+      blacklist: [
+        'favoriteMovies',
+        'playingMovies',
+        'popularMovies',
+        'singleMovie',
+      ],
+    }
+
     store = configureStore({
       reducer: persistReducer(persistConfig, rootReducer),
       middleware: [

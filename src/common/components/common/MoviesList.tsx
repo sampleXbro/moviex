@@ -51,14 +51,12 @@ export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
               textAlign={isSm && 'center'}
             >
               <Box maxWidth={250} width={'100%'}>
-                <NextLink href={`/movies/${mov.id}`}>
-                  <Image
-                    src={'https://image.tmdb.org/t/p/w300' + mov.poster_path}
-                    width={250}
-                    height={350}
-                    layout={'responsive'}
-                  />
-                </NextLink>
+                <Image
+                  src={'https://image.tmdb.org/t/p/w300' + mov.poster_path}
+                  width={250}
+                  height={350}
+                  layout={'responsive'}
+                />
               </Box>
               <Box
                 display={'flex'}
