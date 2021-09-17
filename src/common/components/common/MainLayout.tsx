@@ -260,9 +260,9 @@ const MainLayout: React.FC = ({ children }) => {
           <MenuItem onClick={() => handleMenuItemClick('/sign-in')}>
             Login
           </MenuItem>
-          <MenuItem onClick={() => handleMenuItemClick('/register/1')}>
-            Register
-          </MenuItem>
+          {/*<MenuItem onClick={() => handleMenuItemClick('/register/1')}>*/}
+          {/*  Register*/}
+          {/*</MenuItem>*/}
         </div>
       )}
     </Menu>
