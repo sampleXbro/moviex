@@ -18,6 +18,7 @@ import Head from 'next/head'
 import { useTheme } from '@material-ui/core/styles'
 import { CustomCircularProgress } from '../../common/components/common/CustomCircularProgress'
 import { useToken } from '../../common/components/hooks/useToken'
+import { Rating } from '@material-ui/lab'
 
 function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()
@@ -149,7 +150,20 @@ function MoviePage(): JSX.Element {
                 </Box>
               </Box>
               <CustomDivider />
-              <hr />
+              <Box
+                display={'flex'}
+                justifyContent={isSm ? 'center' : 'flex-end'}
+                width={'100%'}
+              >
+                <Rating
+                  name={'rating'}
+                  value={data.vote_average}
+                  max={10}
+                  readOnly
+                  precision={0.1}
+                />
+              </Box>
+
               <Typography variant={'subtitle2'}>Жанры: {genres}</Typography>
               <hr />
 

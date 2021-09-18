@@ -1,0 +1,7 @@
+Sitemap: https://moviex.pp.ua/api/sitemap-now-playing.xml
+Sitemap: https://moviex.pp.ua/api/sitemap-popular.xml
+
+User-agent: *
+Allow: /*
+
+Disallow: /api/*
