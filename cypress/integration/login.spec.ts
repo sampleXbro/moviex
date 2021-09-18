@@ -8,7 +8,7 @@ describe('login', () => {
     cy.get('#password').type('kolorifer')
     cy.contains('SIGN IN').click()
     cy.reload()
-    cy.url().should('include', 'movies/now-playing')
+    cy.url().should('include', 'movies/top-rated')
   })
 
   it('should redirect to single movie page', () => {

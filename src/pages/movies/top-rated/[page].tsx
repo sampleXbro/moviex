@@ -1,23 +1,23 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import {
-  setPlayingMovies,
-  usePlayingMovies,
-} from '../../../features/nowPlayingPage'
+  setTopRatedMovies,
+  useTopRatedMovies,
+} from '../../../features/topRatedPage'
 import Head from 'next/head'
 import { Box, Typography } from '@material-ui/core'
 import { MoviesList } from '../../../common/components/common/MoviesList'
 import { wrapper } from '../../../app/store'
 import { AxiosResponse } from 'axios'
-import { getNowPlayingMoviesApi } from '../../../common/api/api'
+import { getTopRatedMoviesApi } from '../../../common/api/api'
 import { Pagination } from '@material-ui/lab'
 import { useScrollMemory } from '../../../common/components/hooks/useScrollMemory'
 import { GetStaticPathsResult } from 'next'
 import { Paths } from '../../../common/types/types'
 
-function NowPlaying(): JSX.Element {
+function TopRated(): JSX.Element {
   const router = useRouter()
-  const { data } = usePlayingMovies()
+  const { data } = useTopRatedMovies()
   useScrollMemory()
 
   const page = Number(router.query.page) || 1
@@ -35,11 +35,11 @@ function NowPlaying(): JSX.Element {
   return (
     <div>
       <Head>
-        <title>Moviex | Сейчас в прокате</title>
+        <title>Moviex | Самые рейтинговые</title>
       </Head>
 
       <Typography variant={'h5'} align={'center'}>
-        СЕЙЧАС В ПРОКАТЕ
+        САМЫЕ РЕЙТИНГОВЫЕ
       </Typography>
       <MoviesList data={data} />
       <Box display={'flex'} justifyContent={'center'}>
@@ -55,20 +55,20 @@ function NowPlaying(): JSX.Element {
   )
 }
 
-export default NowPlaying
+export default TopRated
 
 export const getStaticProps = wrapper.getStaticProps(
   async ({ store, params }) => {
-    const { data }: AxiosResponse = await getNowPlayingMoviesApi(
+    const { data }: AxiosResponse = await getTopRatedMoviesApi(
       Number(params?.page)
     )
-    store.dispatch(setPlayingMovies(data))
+    store.dispatch(setTopRatedMovies(data))
     return { revalidate: 60 }
   }
 )
 
 export const getStaticPaths = async (): Promise<GetStaticPathsResult> => {
-  const { data }: AxiosResponse = await getNowPlayingMoviesApi(1)
+  const { data }: AxiosResponse = await getTopRatedMoviesApi(1)
   const paths: Paths = []
 
   for (let i = 0; i < data.total_pages; i++) {

@@ -20,6 +20,12 @@ export const getPopularMoviesApi = (page = 1): AxiosPromise => {
   )
 }
 
+export const getTopRatedMoviesApi = (page = 1): AxiosPromise => {
+  return Axios.get(
+    `/movie/top_rated?api_key=${apiKey}&language=ru-RU&page=${page}`
+  )
+}
+
 export const getGenresApi = (): AxiosPromise => {
   return Axios.get(`/genre/movie/list?api_key=${apiKey}&language=ru-RU`)
 }

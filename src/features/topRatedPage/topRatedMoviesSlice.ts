@@ -5,16 +5,16 @@ import { initialMoviesState } from '../../common/utils/initData'
 
 const hydrate = createAction<MoviesState>(HYDRATE)
 
-const playingMoviesSlice = createSlice({
-  name: 'playingMovies',
+const topRatedMoviesSlice = createSlice({
+  name: 'topRatedMovies',
   initialState: initialMoviesState,
   reducers: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    getPlayingMovies(state, action) {
+    getTopRatedMovies(state, action) {
       state.isLoading = true
     },
 
-    setPlayingMovies(state, action) {
+    setTopRatedMovies(state, action) {
       state.data = action.payload
       state.isLoading = false
     },
@@ -23,12 +23,13 @@ const playingMoviesSlice = createSlice({
     builder.addCase(hydrate, (state, action) => {
       return {
         ...state,
-        ...(action.payload as any)[playingMoviesSlice.name],
+        ...(action.payload as any)[topRatedMoviesSlice.name],
       }
     })
   },
 })
 
-export const { getPlayingMovies, setPlayingMovies } = playingMoviesSlice.actions
+export const { getTopRatedMovies, setTopRatedMovies } =
+  topRatedMoviesSlice.actions
 
-export default playingMoviesSlice.reducer
+export default topRatedMoviesSlice.reducer

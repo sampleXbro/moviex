@@ -4,7 +4,6 @@ import React from 'react'
 import { MuiThemeProvider } from '@material-ui/core'
 import theme from '../common/styles/theme'
 import { AppProps } from 'next/app'
-
 import MainLayout from '../common/components/common/MainLayout'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Persistor } from 'redux-persist/es/types'

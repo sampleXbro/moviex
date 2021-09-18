@@ -9,9 +9,9 @@ type Icons = {
 export const SESSION_NAME = 'moviex/request_token'
 
 export const routes = [
-  { id: 1, title: 'В прокате', path: '/movies/now-playing/1' },
-  { id: 2, title: 'Популярное', path: '/movies/popular/1' },
-  { id: 3, title: 'Избранное', path: '/favorite' },
+  { id: 2, title: 'Популярные', path: '/movies/popular/1' },
+  { id: 1, title: 'Рейтинговые', path: '/movies/top-rated/1' },
+  { id: 3, title: 'Избранные', path: '/favorite' },
 ]
 
 const icons: Icons = {

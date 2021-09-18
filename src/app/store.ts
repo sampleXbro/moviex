@@ -6,7 +6,7 @@ import {
 } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
 import { rootSaga } from './rootSaga'
-import { reducer as playingMovies } from '../features/nowPlayingPage'
+import { reducer as topRatedMovies } from '../features/topRatedPage'
 import { reducer as popularMovies } from '../features/popularPage'
 import { reducer as singleMovie } from '../features/singleMoviePage'
 import { reducer as auth } from '../features/authPage'
@@ -28,7 +28,7 @@ type PersistStore = {
 } & Store
 
 const rootReducer = combineReducers({
-  playingMovies,
+  topRatedMovies,
   popularMovies,
   singleMovie,
   favoriteMovies,
@@ -54,7 +54,7 @@ export const makeStore = (): PersistStore => {
       version: 1,
       blacklist: [
         'favoriteMovies',
-        'playingMovies',
+        'topRatedMovies',
         'popularMovies',
         'singleMovie',
       ],

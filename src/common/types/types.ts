@@ -75,7 +75,7 @@ export type MoviesListProps = {
 }
 
 export type FullState = {
-  playingMovies: MoviesState
+  topRatedMovies: MoviesState
   popularMovies: MoviesState
 }
 

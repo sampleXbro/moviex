@@ -59,7 +59,7 @@ export default function SignIn(): JSX.Element {
   useEffect(() => {
     if (isValidToken) {
       if (router.asPath === '/sign-in') {
-        router.push('/movies/now-playing/1')
+        router.push('/movies/top-rated/1')
       } else {
         router.push(router.asPath)
       }
