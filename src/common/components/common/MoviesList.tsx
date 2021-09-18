@@ -6,7 +6,6 @@ import { getGenresApi } from '../../api/api'
 import { Genre, Movie, MoviesListResponse } from '../../types/types'
 import { CustomDivider } from './CustomDivider'
 import { useTheme } from '@material-ui/core/styles'
-import { Rating } from '@material-ui/lab'
 
 type MoviesListProps = {
   data: MoviesListResponse
@@ -82,13 +81,7 @@ export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
                   justifyContent={isSm ? 'center' : 'flex-end'}
                   width={'100%'}
                 >
-                  <Rating
-                    name={'rating'}
-                    value={mov.vote_average}
-                    max={10}
-                    readOnly
-                    precision={0.1}
-                  />
+                  Рейтинг: {mov.vote_average} из 10
                 </Box>
                 <CustomDivider />
                 <Box
