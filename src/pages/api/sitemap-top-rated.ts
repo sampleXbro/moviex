@@ -1,6 +1,6 @@
 import { SitemapStream, streamToPromise } from 'sitemap'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getNowPlayingMoviesApi } from '../../common/api/api'
+import { getTopRatedMoviesApi } from '../../common/api/api'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -8,13 +8,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       hostname: `https://${req.headers.host}`,
     })
 
-    const { data } = await getNowPlayingMoviesApi()
+    const { data } = await getTopRatedMoviesApi()
 
     let curPage = 1
 
     do {
       smStream.write({
-        url: `/movies/now-playing/${curPage}`,
+        url: `/movies/top-rated/${curPage}`,
         changefreq: 'daily',
         priority: 0.9,
       })

@@ -1,4 +1,4 @@
-Sitemap: https://moviex.pp.ua/api/sitemap-now-playing
+Sitemap: https://moviex.pp.ua/api/sitemap-top-rated
 Sitemap: https://moviex.pp.ua/api/sitemap-popular
 
 User-agent: *
