@@ -1,5 +1,5 @@
-Sitemap: https://moviex.pp.ua/api/sitemap-now-playing.xml
-Sitemap: https://moviex.pp.ua/api/sitemap-popular.xml
+Sitemap: https://moviex.pp.ua/api/sitemap-now-playing
+Sitemap: https://moviex.pp.ua/api/sitemap-popular
 
 User-agent: *
 Allow: /*
