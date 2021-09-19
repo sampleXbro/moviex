@@ -1,5 +1,5 @@
 import { getMovie, useMovie } from '../../features/singleMoviePage'
-import { Box, Paper, Typography, useMediaQuery } from '@material-ui/core'
+import { Box, Paper, Typography } from '@material-ui/core'
 import Image from 'next/image'
 import React, { useEffect } from 'react'
 import ReactPlayer from 'react-player/youtube'
@@ -15,15 +15,12 @@ import { useDispatch } from 'react-redux'
 import { useAuth } from '../../features/authPage'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { useTheme } from '@material-ui/core/styles'
 import { CustomCircularProgress } from '../../common/components/common/CustomCircularProgress'
 import { useToken } from '../../common/components/hooks/useToken'
 import { Rating } from '@material-ui/lab'
 
 function MoviePage(): JSX.Element {
   const { data, videos } = useMovie()
-  const theme = useTheme()
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'))
   const authData = useAuth()
   const { isValidToken } = useToken()
   const favorites = useFavoriteMovies()
@@ -100,8 +97,8 @@ function MoviePage(): JSX.Element {
           <Box
             display={'flex'}
             padding={'10px'}
-            flexDirection={isSm && 'column'}
-            alignItems={isSm && 'center'}
+            flexDirection={{ xs: 'column', sm: 'column', md: 'row' }}
+            alignItems={{ xs: 'center', sm: 'center', md: 'flex-start' }}
           >
             <Box width={'100%'} maxWidth={'300px'}>
               <Image
@@ -115,9 +112,9 @@ function MoviePage(): JSX.Element {
               display={'flex'}
               flexDirection={'column'}
               flex={1}
-              padding={'0 10px'}
-              alignItems={isSm && 'center'}
-              textAlign={isSm && 'center'}
+              padding={{ xs: '0', sm: '0 10px' }}
+              alignItems={{ xs: 'center', sm: 'center', md: 'flex-start' }}
+              textAlign={{ xs: 'center', sm: 'center', md: 'left' }}
             >
               <Box
                 width={'100%'}
@@ -152,7 +149,7 @@ function MoviePage(): JSX.Element {
               <CustomDivider />
               <Box
                 display={'flex'}
-                justifyContent={isSm ? 'center' : 'flex-end'}
+                justifyContent={{ xs: 'center', sm: 'center', md: 'flex-end' }}
                 width={'100%'}
               >
                 <Rating
