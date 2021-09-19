@@ -33,7 +33,7 @@ function Popular(): React.ReactElement {
     })
   }
 
-  if (data.results.length) return <CustomCircularProgress />
+  if (!data.results.length) return <CustomCircularProgress />
 
   return (
     <>

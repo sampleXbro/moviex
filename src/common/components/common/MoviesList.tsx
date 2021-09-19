@@ -1,11 +1,10 @@
-import { Box, Link, Paper, Typography, useMediaQuery } from '@material-ui/core'
+import { Box, Link, Paper, Typography } from '@material-ui/core'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { getGenresApi } from '../../api/api'
 import { Genre, Movie, MoviesListResponse } from '../../types/types'
 import { CustomDivider } from './CustomDivider'
-import { useTheme } from '@material-ui/core/styles'
 
 type MoviesListProps = {
   data: MoviesListResponse
@@ -14,8 +13,6 @@ type MoviesListProps = {
 
 export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
   const [genres, setGenres] = useState<Array<Genre>>([])
-  const theme = useTheme()
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'))
 
   useEffect(() => {
     getGenresApi().then((res) => setGenres(res.data.genres))
@@ -32,12 +29,14 @@ export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
     <Box
       display={'flex'}
       flexDirection={reversed ? 'column-reverse' : 'column'}
+      height={'100%'}
     >
       {data.results.map((mov: Movie) => (
         <Box
           margin={'10px auto'}
           maxWidth={'1200px'}
           width={'100%'}
+          height={'100%'}
           key={mov.id}
         >
           <Paper>
@@ -46,9 +45,9 @@ export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
               minHeight={'250px'}
               padding={'10px'}
               justifyContent={'center'}
-              flexDirection={isSm && 'column'}
-              alignItems={isSm && 'center'}
-              textAlign={isSm && 'center'}
+              flexDirection={{ xs: 'column', sm: 'column', md: 'row' }}
+              alignItems={{ xs: 'center', sm: 'center', md: 'flex-start' }}
+              textAlign={{ xs: 'center', sm: 'center', md: 'left' }}
             >
               <Box maxWidth={250} width={'100%'}>
                 <Image
@@ -61,9 +60,10 @@ export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
               <Box
                 display={'flex'}
                 flexDirection={'column'}
-                alignItems={isSm ? 'center' : 'flex-start'}
+                alignItems={{ xs: 'center', sm: 'center', md: 'flex-start' }}
                 margin={'0 10px'}
                 width={'100%'}
+                height={'100%'}
               >
                 <Link style={{ cursor: 'pointer' }}>
                   <NextLink href={`/movies/${mov.id}`}>
@@ -78,7 +78,11 @@ export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
                 </Typography>
                 <Box
                   display={'flex'}
-                  justifyContent={isSm ? 'center' : 'flex-end'}
+                  justifyContent={{
+                    xs: 'center',
+                    sm: 'center',
+                    md: 'flex-end',
+                  }}
                   width={'100%'}
                 >
                   Рейтинг: {mov.vote_average} из 10
@@ -89,6 +93,7 @@ export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
                   flexDirection={'column'}
                   width={'100%'}
                   height={'100%'}
+                  minHeight={{ xs: 'auto', sm: 'auto', md: '250px' }}
                   justifyContent={'space-between'}
                 >
                   <Typography variant={'body2'}>{mov.overview}</Typography>
