@@ -14,6 +14,7 @@ import { Pagination } from '@material-ui/lab'
 import { useScrollMemory } from '../../../common/components/hooks/useScrollMemory'
 import { GetStaticPathsResult } from 'next'
 import { Paths } from '../../../common/types/types'
+import { CustomCircularProgress } from '../../../common/components/common/CustomCircularProgress'
 
 function TopRated(): JSX.Element {
   const router = useRouter()
@@ -31,6 +32,8 @@ function TopRated(): JSX.Element {
       sessionStorage.clear()
     })
   }
+
+  if (!data.results.length) return <CustomCircularProgress />
 
   return (
     <div>

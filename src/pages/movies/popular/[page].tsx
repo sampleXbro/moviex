@@ -14,6 +14,7 @@ import {
 import { useScrollMemory } from '../../../common/components/hooks/useScrollMemory'
 import { GetStaticPathsResult } from 'next'
 import { Paths } from '../../../common/types/types'
+import { CustomCircularProgress } from '../../../common/components/common/CustomCircularProgress'
 
 function Popular(): React.ReactElement {
   const router = useRouter()
@@ -31,6 +32,8 @@ function Popular(): React.ReactElement {
       sessionStorage.clear()
     })
   }
+
+  if (data.results.length) return <CustomCircularProgress />
 
   return (
     <>

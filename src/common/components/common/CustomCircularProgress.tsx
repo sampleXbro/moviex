@@ -9,9 +9,10 @@ export const CustomCircularProgress: React.FC = () => {
       display={'flex'}
       width={'100%'}
       justifyContent={'center'}
-      top={'50%'}
+      marginLeft={'-10px'}
+      top={'45%'}
     >
-      <CircularProgress />
+      <CircularProgress size={50} />
     </Box>
   )
 }
