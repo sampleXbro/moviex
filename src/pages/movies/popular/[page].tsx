@@ -64,7 +64,7 @@ export const getStaticProps = wrapper.getStaticProps(
       Number(params?.page)
     )
     store.dispatch(setPopularMovies(data))
-    return { revalidate: 60 }
+    return { revalidate: 60 * 60 }
   }
 )
 
