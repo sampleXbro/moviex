@@ -33,7 +33,7 @@ import { getIcon, routes } from '../../utils/constants'
 import { useToken } from '../hooks/useToken'
 import { useDispatch } from 'react-redux'
 import { authClear } from '../../../features/authPage'
-import { useMediaQuery } from '@material-ui/core'
+import { Box } from '@material-ui/core'
 
 const drawerWidth = 220
 
@@ -164,7 +164,6 @@ const useStyles = makeStyles((theme: Theme) =>
 const MainLayout: React.FC = ({ children }) => {
   const classes = useStyles()
   const theme = useTheme()
-  const isSm = useMediaQuery(theme.breakpoints.down('xs'))
   const router = useRouter()
   const { isValidToken } = useToken()
   const dispatch = useDispatch()
@@ -258,7 +257,7 @@ const MainLayout: React.FC = ({ children }) => {
       ) : (
         <div>
           <MenuItem onClick={() => handleMenuItemClick('/sign-in')}>
-            Login
+            Войти
           </MenuItem>
           {/*<MenuItem onClick={() => handleMenuItemClick('/register/1')}>*/}
           {/*  Register*/}
@@ -315,11 +314,11 @@ const MainLayout: React.FC = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          {!isSm && (
+          <Box display={{ xs: 'none', sm: 'block' }}>
             <Typography variant='h6' noWrap>
               MOVIEX
             </Typography>
-          )}
+          </Box>
           <div className={classes.search} style={{ width: '450px' }}>
             {isLiveSearchVisible && <LiveSearch searchStr={searchStr} />}
             <div className={classes.searchIcon}>

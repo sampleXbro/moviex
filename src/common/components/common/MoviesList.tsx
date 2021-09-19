@@ -11,7 +11,7 @@ type MoviesListProps = {
   reversed?: boolean
 }
 
-export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
+const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
   const [genres, setGenres] = useState<Array<Genre>>([])
 
   useEffect(() => {
@@ -115,3 +115,5 @@ export const MoviesList: React.FC<MoviesListProps> = ({ data, reversed }) => {
     </Box>
   )
 }
+
+export default MoviesList

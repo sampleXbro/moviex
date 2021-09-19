@@ -6,7 +6,7 @@ import {
 } from '../../../features/topRatedPage'
 import Head from 'next/head'
 import { Box, Typography } from '@material-ui/core'
-import { MoviesList } from '../../../common/components/common/MoviesList'
+import MoviesList from '../../../common/components/common/MoviesList'
 import { wrapper } from '../../../app/store'
 import { AxiosResponse } from 'axios'
 import { getTopRatedMoviesApi } from '../../../common/api/api'
