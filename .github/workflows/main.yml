@@ -24,4 +24,4 @@ jobs:
         if: github.event_name == 'push'
         run: |
           export SECRETS_NAME="secrets.${BRANCH^^}_SERVER"
-          echo "ubuntu@${{ secrets.${BRANCH^^}_SERVER }}"
+          echo "ubuntu@$SECRETS_NAME"
