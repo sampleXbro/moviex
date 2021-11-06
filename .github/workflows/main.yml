@@ -26,4 +26,5 @@ jobs:
         if: github.event_name == 'push'
         run: |
           export SECRETS_NAME=${{secrets[env.SECRET_NAME]}}
+          echo $SECRET_NAME
           echo "ubuntu@${SECRETS_NAME}"
