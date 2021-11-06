@@ -21,7 +21,7 @@ jobs:
       - name: Set branch variable
         run: |
           echo "BRANCH=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
-          echo ${env.BRANCH}
+          echo ${{env.BRANCH}}
           echo "SECRET_NAME=${BRANCH^^}_SERVER" >> $GITHUB_ENV
       - name: Print current branch name
         if: github.event_name == 'push'
