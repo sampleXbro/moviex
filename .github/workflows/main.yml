@@ -20,8 +20,9 @@ jobs:
     steps:
       - name: Set branch variable
         run: |
-          echo "BRANCH=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
-          echo "SERVER_NAME=$(echo ${(GITHUB_REF#refs/heads/)^^}_SERVER | tr / -)" >> $GITHUB_ENV
+          export BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          echo "BRANCH=$(echo ${BRANCH_NAME} | tr / -)" >> $GITHUB_ENV
+          echo "SERVER_NAME=$(echo ${BRANCH_NAME}_SERVER | tr / -)" >> $GITHUB_ENV
       - name: Print current branch name
         if: github.event_name == 'push'
         run: |
