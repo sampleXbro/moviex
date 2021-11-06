@@ -23,6 +23,5 @@ jobs:
       - name: Print current branch name
         if: github.event_name == 'push'
         run: |
-          export SECRETS_NAME=secrets["${BRANCH^^}_SERVER"]
-          export SECRETS_VALUE=${{ SECRETS_NAME }}
-          echo "ubuntu@${SECRETS_VALUE}"
+          export SECRETS_NAME=${{secrets["$BRANCH^^_SERVER"]}}
+          echo "ubuntu@${SECRETS_NAME}"
