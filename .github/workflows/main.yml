@@ -24,5 +24,5 @@ jobs:
         if: github.event_name == 'push'
         run: |
           export SECRETS_NAME=secrets["${BRANCH^^}_SERVER"]
-          export SECRETS_VALUE=${{ SECRETS_VALUE }}
+          export SECRETS_VALUE=${{ SECRETS_NAME }}
           echo "ubuntu@${SECRETS_VALUE}"
