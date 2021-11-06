@@ -26,4 +26,7 @@ jobs:
         
       - name: Print current branch name
         run: echo "${{ steps.myref.outputs.branch }}"
+        
+      - name: Print current branch name again
+        run: echo "${{ steps.myref.outputs.branch }}"
 
