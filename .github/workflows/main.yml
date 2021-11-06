@@ -20,9 +20,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Set branch variable
-        run: echo "BRANCH=${GITHUB_REF#refs/heads/}"
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
       - name: Print current branch name
         if: github.event_name == 'push'
         run: | 
-          echo "${ BRANCH }"
+          echo "${ env.BRANCH }"
 
