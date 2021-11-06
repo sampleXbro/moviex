@@ -19,9 +19,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Set branch variable
-        run: echo "BRANCH=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+        run: |
+          echo "BRANCH=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+          echo "SECRET_NAME=$(echo ${BRANCH}_SERVER)" >> $GITHUB_ENV
       - name: Print current branch name
         if: github.event_name == 'push'
         run: |
-          export SECRETS_NAME=${{secrets[env.BRANCH]}}
+          export SECRETS_NAME=${{secrets[env.SECRET_NAME]}}
           echo "ubuntu@${SECRETS_NAME}"
