@@ -22,10 +22,10 @@ jobs:
         run: |
           export BRANCH_NAME=${GITHUB_REF#refs/heads/}
           echo "BRANCH=$(echo ${BRANCH_NAME} | tr / -)" >> $GITHUB_ENV
-          echo "SERVER_NAME=$(echo ${BRANCH_NAME^^}_SERVER | tr / -)" >> $GITHUB_ENV
+          echo "SERVER_NAME=$(echo ${BRANCH_NAME^^}_SERVE | tr / -)" >> $GITHUB_ENV
       - name: Print current branch name
         if: github.event_name == 'push'
         run: |
-          export SERVER_SECRET_NAME=${{secrets[env.SERVER_NAME]}}
+          export SERVER_SECRET_VALUE=${{secrets[env.SERVER_NAME]}}
           echo $SERVER_NAME
-          echo "ubuntu@${SERVER_SECRET_NAME}"
+          echo "ubuntu@${SERVER_SECRET_VALUE}"
