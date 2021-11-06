@@ -24,6 +24,7 @@ jobs:
         run: echo "BRANCH=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
       - name: Print current branch name
         if: github.event_name == 'push'
-        run: | 
-          echo "$BRANCH"
+        with:
+          command: | 
+            echo "$BRANCH"
 
