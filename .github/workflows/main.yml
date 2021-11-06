@@ -25,6 +25,6 @@ jobs:
       - name: Print current branch name
         if: github.event_name == 'push'
         run: | 
-          echo "${{ BRANCH_NAME }}"
+          echo "${{ env.BRANCH_NAME }}"
           echo "${ BRANCH }"
 
