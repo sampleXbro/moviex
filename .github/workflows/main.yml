@@ -22,4 +22,6 @@ jobs:
         run: echo "BRANCH=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
       - name: Print current branch name
         if: github.event_name == 'push'
-        run: echo "ubuntu@${{ secrets.${BRANCH^^}_SERVER }}" #"secrets.${BRANCH^^}_SERVER"
+        run: |
+          export SECRETS_NAME="secrets.${BRANCH^^}_SERVER"
+          echo "ubuntu@${{ secrets.${BRANCH^^}_SERVER }}"
