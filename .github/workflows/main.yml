@@ -25,5 +25,7 @@ jobs:
         id: myref
         
       - name: Print current branch name
-        run: echo "${{ steps.myref.outputs.branch }}"
+        run: | 
+          echo "${{ steps.myref.outputs.branch }}"
+          echo "${{toJSON(github)}}"
 
