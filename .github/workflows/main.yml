@@ -22,6 +22,5 @@ jobs:
         run: echo "BRANCH=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
       - name: Print current branch name
         if: github.event_name == 'push'
-        uses: ASzc/change-string-case-action@v1
-      - run: echo "${BRANCH.uppercase}"
+        run: echo "${BRANCH}"
 
