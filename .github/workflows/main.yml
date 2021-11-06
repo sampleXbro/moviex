@@ -23,7 +23,5 @@ jobs:
       - name: Print current branch name
         if: github.event_name == 'push'
         uses: ASzc/change-string-case-action@v1
-        with:
-          command: | 
-            echo "${BRANCH.uppercase}"
+      - run: echo "${BRANCH.uppercase}"
 
