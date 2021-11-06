@@ -24,7 +24,7 @@ jobs:
           echo "BRANCH=$(echo ${BRANCH_NAME} | tr / -)" >> $GITHUB_ENV
           echo "SERVER_NAME=$(echo ${BRANCH_NAME^^}_SERVER | tr / -)" >> $GITHUB_ENV
       - name: Print current branch name
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/')
         run: |
           export SERVER_SECRET_VALUE=${{secrets[env.SERVER_NAME]}}
           echo $SERVER_NAME
