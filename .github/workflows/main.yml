@@ -18,11 +18,11 @@ jobs:
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:       
+    steps:
+      - name: Set branch variable
+        run: echo "BRANCH=${GITHUB_REF#refs/heads/}"
       - name: Print current branch name
         if: github.event_name == 'push'
-        env:
-          BRANCH: ${{ github.ref }}
         run: | 
-          echo "${GITHUB_REF#refs/heads/}"
+          echo "${ BRANCH }"
 
