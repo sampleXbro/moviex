@@ -5,7 +5,7 @@ describe('login', () => {
     cy.visit('http://localhost:3000/')
 
     cy.get('#username').type('sergeyzhabskiy')
-    cy.get('#password').type('kolorifer')
+    cy.get('#password').type('12345678')
     cy.contains('SIGN IN').click()
     cy.reload()
     cy.url().should('include', 'movies/top-rated')
